@@ -619,6 +619,8 @@ But, you `really shouldn't do that <http://www.pip-installer.org/en/latest/other
 License
 -------
 
+Original Heroku License left intact, The code in this repository is mostly my own, but credit where credit is due and all that :)
+
 Copyright (c) 2013 Heroku, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
