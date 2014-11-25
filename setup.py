@@ -22,7 +22,7 @@ required = [
 
 
 setup(
-    name='heroku',
+    name='heroku3',
     version='3.1.0',
     description='Heroku API Wrapper.',
     long_description=open('README.rst').read() + '\n\n' +
