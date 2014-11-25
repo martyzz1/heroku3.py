@@ -1,4 +1,4 @@
-Heroku.py
+Heroku3.py
 =========
 
 This is the updated Python wrapper for the Heroku `API V3. <https://devcenter.heroku.com/articles/platform-api-reference>`_ 
@@ -11,8 +11,8 @@ Introduction
 
 First instantiate a heroku_conn as above::
     
-    import heroku
-    heroku_conn = heroku.from_key('YOUR_API_KEY')
+    import heroku3
+    heroku_conn = heroku3.from_key('YOUR_API_KEY')
 
 Interact with your applications::
 
@@ -44,7 +44,7 @@ Get the unique ID of the last request sent to heroku to give them for debugging:
 General notes about list Objects
 --------------------------------
 
-The new heroku API gives greater control over the interaction of the returned data. Primarily this 
+The new heroku3 API gives greater control over the interaction of the returned data. Primarily this 
 centres around calls to the api which result in list objects being returned. 
 e.g. multiple objects like apps, addons, releases etc.
 
@@ -115,8 +115,8 @@ Switching Accounts Mid Flow
 
 It is also possible to change the underlying heroku_connection at any point on any object or listobject by creating a new heroku_conn and calling change_connection::
     
-    heroku_conn1 = heroku.from_key('YOUR_API_KEY')
-    heroku_conn2 = heroku.from_key('ANOTHER_API_KEY')
+    heroku_conn1 = heroku3.from_key('YOUR_API_KEY')
+    heroku_conn2 = heroku3.from_key('ANOTHER_API_KEY')
     app = heroku_conn1.apps()['MYAPP']
     app.change_connection(heroku_conn2) 
     app.config() # this call will use heroku_conn2
@@ -605,13 +605,13 @@ Note: logging is now achieved by the following method::
 Installation
 ------------
 
-To install ``heroku.py``, simply::
+To install ``heroku3.py``, simply::
 
-    $ pip install heroku
+    $ pip install heroku3
 
 Or, if you absolutely must::
 
-    $ easy_install heroku
+    $ easy_install heroku3
 
 But, you `really shouldn't do that <http://www.pip-installer.org/en/latest/other-tools.html#pip-compared-to-easy-install>`_.
 
