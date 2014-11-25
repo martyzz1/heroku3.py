@@ -15,12 +15,12 @@ heroku.py
 
 # Meta.
 
-__title__ = 'heroku'
+__title__ = 'heroku3'
 __author__ = 'Heroku'
 __copyright__ = 'Copyright 2013 Heroku'
 __license__ = 'MIT'
 
-__version__ = '0.1.3'
+__version__ = '3.1.0'
 
 # Module namespace.
 
