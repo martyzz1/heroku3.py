@@ -30,7 +30,7 @@ setup(
     author='Martin Moss',
     author_email='martin_moss@btinternet.com',
     url='https://github.com/martyzz1/heroku3.py',
-    packages=['heroku'],
+    packages=['heroku3'],
     package_data={'': ['LICENSE', ]},
     include_package_data=True,
     install_requires=required,
