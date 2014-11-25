@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-heroku.helpers
+heroku3.helpers
 ~~~~~~~~~~~~~~
 
 This module contians the helpers.

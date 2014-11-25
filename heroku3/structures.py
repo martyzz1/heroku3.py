@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-heroku.structures
+heroku3.structures
 ~~~~~~~~~~~~~~~~~
 
 This module contains the specific Heroku.py data types.

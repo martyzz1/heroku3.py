@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-heroku.compat
+heroku3.compat
 ~~~~~~~~~~~~~
 
-Compatiblity for heroku.py.
+Compatiblity for heroku3.py.
 """
 
 try:

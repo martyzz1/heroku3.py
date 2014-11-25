@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-heroku.api
+heroku3.api
 ~~~~~~~~~~
 
 This module provides the basic API interface for Heroku.

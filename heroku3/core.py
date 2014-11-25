@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 """
-heroku.core
+heroku3.core
 ~~~~~~~~~~~
 
-This module provides the base entrypoint for heroku.py.
+This module provides the base entrypoint for heroku3.py.
 """
 
 from .api import Heroku

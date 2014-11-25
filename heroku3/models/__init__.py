@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-heroku.models
+heroku3.models
 ~~~~~~~~~~~~~
 
 This module contains the models that comprise the Heroku API.

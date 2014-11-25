@@ -1,6 +1,6 @@
 # coding=utf-8
 import os
-import heroku
+import heroku3
 from pprint import pprint# noqa
 #import socket
 
@@ -17,7 +17,7 @@ HEROKU_API_KEY = os.environ.get('HEROKU_API_KEY', False)
 HEROKU_APPNAME = os.environ.get('HEROKU_APPNAME', False)
 TEST_EMAIL = os.environ.get('TEST_EMAIL', False)
 
-heroku_conn = heroku.from_key(HEROKU_API_KEY)
+heroku_conn = heroku3.from_key(HEROKU_API_KEY)
 
 #app = heroku_conn.create_app(name='testy2124app', stack_id_or_name='cedar', region_id_or_name='us')
 #print app.addons()

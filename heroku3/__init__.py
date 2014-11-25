@@ -6,7 +6,7 @@
 
 
 """
-heroku.py
+heroku3.py
 ~~~~~~~~~
 
 :copyright: (c) 2013 by Heroku.
