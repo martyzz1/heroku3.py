@@ -23,14 +23,14 @@ required = [
 
 setup(
     name='heroku3',
-    version='3.1.1',
+    version='3.1.2',
     description='Heroku API Wrapper.',
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
     author='Martin Moss',
     author_email='martin_moss@btinternet.com',
     url='https://github.com/martyzz1/heroku3.py',
-    download_url='https://github.com/martyzz1/heroku3.py/tarball/v3.1.1',
+    download_url='https://github.com/martyzz1/heroku3.py/tarball/v3.1.2',
     packages=['heroku3'],
     package_data={'': ['LICENSE', ]},
     include_package_data=True,
