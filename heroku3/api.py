@@ -166,13 +166,9 @@ class HerokuCore(object):
 
         if r.status_code == 429:
             #Rate limit reached
-            print r.headers
             raise RateLimitExceeded("You have exceeded your rate limit \n{0}".format(r.content.decode("utf-8")))
 
         if (not str(r.status_code).startswith('2')) and (not r.status_code in [304]):
-            print "Status not sensible - {0}".format(r.status_code)
-            print r.headers
-            print r.content.decode("utf-8")
             pass
         r.raise_for_status()
         #print r.content.decode("utf-8")
