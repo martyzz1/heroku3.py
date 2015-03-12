@@ -1,5 +1,8 @@
 History
 -------
+3.1.3 (2015-03-12)
+* removed debug
+
 3.1.0 (2014-11-24)
 ++++++++++++++++++
 * Moved to Heroku3 for pypi release
