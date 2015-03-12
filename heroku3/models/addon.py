@@ -33,7 +33,6 @@ class Addon(BaseResource):
             data=self._h._resource_serialize(payload)
         )
 
-        print r.content.decode("utf-8")
         r.raise_for_status()
         item = self._h._resource_deserialize(r.content.decode("utf-8"))
         return Addon.new_from_dict(item, h=self._h, app=self.app)
