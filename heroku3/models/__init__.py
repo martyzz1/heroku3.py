@@ -69,7 +69,7 @@ class BaseResource(object):
 
     def dict(self):
         d = dict()
-        for k in self.keys():
+        for k in self._keys():
             d[k] = self.__dict__.get(k)
 
         return d
