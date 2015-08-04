@@ -3,6 +3,7 @@ from ..rendezvous import Rendezvous
 from ..structures import DynoListResource
 
 from .addon import Addon
+from .build import Build
 from .collaborator import Collaborator
 from .configvars import ConfigVars
 from .domain import Domain
@@ -45,6 +46,15 @@ class App(BaseResource):
         return self._h._get_resources(
             resource=('apps', self.name, 'addons'),
             obj=Addon, app=self, **kwargs
+        )
+
+    def builds(self, **kwargs):
+        """
+        Returns a list of application builds as Build objects
+        """
+        return self._h._get_resources(
+            resource=('apps', self.name, 'builds'),
+            obj=Build, app=self, **kwargs
         )
 
     def delete(self):
