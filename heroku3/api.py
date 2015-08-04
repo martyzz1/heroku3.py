@@ -15,6 +15,7 @@ from .models.addon import Addon
 from .models.dyno import Dyno
 from .models.account import Account
 from .models.key import Key
+from .models.invoice import Invoice
 from .models.configvars import ConfigVars
 from .models.logsession import LogSession
 from .models.oauth import OAuthClient, OAuthAuthorization, OAuthToken
@@ -288,6 +289,9 @@ class Heroku(HerokuCore):
 
     def keys(self, **kwargs):
         return self._get_resources(('user', 'keys'), Key, map=SSHKeyListResource, **kwargs)
+
+    def invoices(self,**kwargs):
+        return self._get_resources(('account/invoices'),Invoice)
 
     def labs(self, **kwargs):
         return self.features(**kwargs)
