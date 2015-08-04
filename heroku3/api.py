@@ -288,7 +288,7 @@ class Heroku(HerokuCore):
         return app
 
     def keys(self, **kwargs):
-        return self._get_resources(('user', 'keys'), Key, map=SSHKeyListResource, **kwargs)
+        return self._get_resources(('account/keys'), Key, map=SSHKeyListResource, **kwargs)
 
     def invoices(self,**kwargs):
         return self._get_resources(('account/invoices'),Invoice)
