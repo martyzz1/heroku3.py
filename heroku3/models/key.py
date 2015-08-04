@@ -4,7 +4,7 @@ from .  import BaseResource
 class Key(BaseResource):
     """Heroku SSH Key."""
 
-    _strs = ['id', 'public_key', 'email', 'fingerprint']
+    _strs = ['id', 'public_key', 'email', 'fingerprint', 'comment']
     _dates = ['created_at', 'updated_at']
     _pks = ['id']
 
