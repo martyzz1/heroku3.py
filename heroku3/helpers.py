@@ -36,6 +36,7 @@ def to_python(obj,
     date_keys=None,
     int_keys=None,
     object_map=None,
+    array_map=None,
     bool_keys=None,
     dict_keys=None,
     **kwargs):
@@ -87,6 +88,11 @@ def to_python(obj,
         for (k, v) in object_map.items():
             if in_dict.get(k):
                 d[k] = v.new_from_dict(in_dict.get(k))
+
+    if array_map:
+        for (k,v) in array_map.items():
+            if in_dict.get(k):
+                d[k] = [ v.new_from_dict(i) for i in in_dict.get(k)]
 
     obj.__dict__.update(d)
     obj.__dict__.update(kwargs)
