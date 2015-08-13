@@ -27,6 +27,7 @@ class BaseResource(object):
     _bools = []
     _dicts = []
     _map = {}
+    _arrays = {}
     _pks = []
     order_by = 'id'
 
@@ -45,7 +46,8 @@ class BaseResource(object):
             setattr(self, attr, None)
 
     def _keys(self):
-        return self._strs + self._ints + self._dates + self._bools + list(self._map.keys())
+        return self._strs + self._ints + self._dates + self._bools + \
+            list(self._map.keys()) + list(self._arrays.keys())
 
     @property
     def _id(self):
@@ -90,6 +92,7 @@ class BaseResource(object):
             bool_keys=cls._bools,
             dict_keys=cls._dicts,
             object_map=cls._map,
+            array_map=cls._arrays,
             _h=h
         )
 
