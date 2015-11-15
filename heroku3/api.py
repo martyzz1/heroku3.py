@@ -146,8 +146,6 @@ class HerokuCore(object):
 
         headers = self._get_headers_for_request(method, url, legacy=legacy, order_by=order_by, limit=limit, valrange=valrange, sort=sort)
 
-        #print "\n\n\n\n"
-        #print url
         r = self._session.request(method, url, params=params, data=data, headers=headers)
 
         if 'ratelimit-remaining' in r.headers:
@@ -172,8 +170,6 @@ class HerokuCore(object):
         if (not str(r.status_code).startswith('2')) and (not r.status_code in [304]):
             pass
         r.raise_for_status()
-        #print r.content.decode("utf-8")
-        #print "\n\n\n\n"
         return r
 
     def _get_resource(self, resource, obj, params=None, **kwargs):
@@ -201,7 +197,7 @@ class HerokuCore(object):
         if r.status_code == 206 and 'Next-Range' in r.headers and not limit:
             #We have unexpected chunked response - deal with it
             valrange = r.headers['Next-Range']
-            print "Warning Response was chunked, Loading the next Chunk using the following next-range header returned by Heroku '{0}'. WARNING - This breaks randomly depending on your order_by name. I think it's only guarenteed to work with id's - Looks to be a Heroku problem".format(valrange)
+            print ("Warning Response was chunked, Loading the next Chunk using the following next-range header returned by Heroku '{0}'. WARNING - This breaks randomly depending on your order_by name. I think it's only guarenteed to work with id's - Looks to be a Heroku problem".format(valrange))
             new_items = self._get_data(resource, params=params, legacy=legacy, order_by=order_by, limit=limit, valrange=valrange, sort=sort)
             items.extend(new_items)
 
@@ -210,9 +206,9 @@ class HerokuCore(object):
     def _process_items(self, d_items, obj, map=None, **kwargs):
 
         if not isinstance(d_items, list):
-            print "Warning, Response for '{0}' was of type {1} - I was expecting a 'list'. This could mean the api has changed its response type for this request.".format(obj, type(d_items))
+            print ("Warning, Response for '{0}' was of type {1} - I was expecting a 'list'. This could mean the api has changed its response type for this request.".format(obj, type(d_items)))
             if isinstance(d_items, dict):
-                print "As it's a dict, I'll try to process it anyway"
+                print ("As it's a dict, I'll try to process it anyway")
                 return self._process_item(d_items, obj, **kwargs)
 
         items = [obj.new_from_dict(item, h=self, **kwargs) for item in d_items]
@@ -280,7 +276,7 @@ class Heroku(HerokuCore):
             app = App.new_from_dict(item, h=self)
         except HTTPError as e:
             if "Name is already taken" in str(e):
-                print "Warning - {0:s}".format(e)
+                print ("Warning - {0:s}".format(e))
                 app = self.app(name)
                 pass
             else:
