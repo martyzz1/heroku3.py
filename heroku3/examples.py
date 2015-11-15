@@ -83,10 +83,12 @@ heroku_conn = heroku3.from_key(HEROKU_API_KEY)
 #app.rollback('v108')
 
 
-#apps = heroku_conn.apps(order_by='name')
+#apps = heroku_conn.apps(order_by='name', limit=1, sort='asc')
+#apps = heroku_conn.apps(order_by='name', limit=1)
+apps = heroku_conn.apps(order_by='name', sort='asc')
 
-#for app in apps:
-    #print app.name
+for app in apps:
+    print app.name
 
 #app.rename('testy223')
 

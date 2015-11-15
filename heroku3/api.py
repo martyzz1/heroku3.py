@@ -115,18 +115,29 @@ class HerokuCore(object):
 
         else:
             range_str = None
+            # "Range: name ..; order=desc,max=10;"#
             if order_by or limit or valrange or sort:
                 range_str = ""
+                seperator = ''
                 if order_by:
-                    range_str = "{0} ..".format(order_by)
+                    range_str = "{0} ..;".format(order_by)
+                else:
+                    range_str = "id ..;"
+                
+                if not sort is None:
+                    assert(sort == 'asc' or sort == 'desc')
+                    range_str += " order={0}".format(sort)
+                    seperator = ','
+                else:
+                    range_str += ' '
+
                 if limit:
                     if limit > 1000:
                         raise MaxRangeExceeded("Your *limit* ({0}) argument is greater than the maximum allowed value of 1000".format(limit))
-                    range_str += "; max={0}".format(limit)
-                if not sort is None:
-                    assert(sort == 'asc' or sort == 'desc')
-                    range_str += "; order={0}".format(sort)
+                    range_str += "{0}max={1}".format(seperator, limit)
 
+                range_str += ';'
+                #print(range_str)
                 if valrange:
                     #If given, This should override limit and order_by
                     range_str = valrange
