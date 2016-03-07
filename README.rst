@@ -1,7 +1,7 @@
 Heroku3.py
 =========
 
-This is the updated Python wrapper for the Heroku `API V3. <https://devcenter.heroku.com/articles/platform-api-reference>`_ 
+This is the updated Python wrapper for the Heroku `API V3. <https://devcenter.heroku.com/articles/platform-api-reference>`_
 The Heroku REST API allows Heroku users to manage their accounts, applications, addons, and
 other aspects related to Heroku. It allows you to easily utilize the Heroku
 platform from your applications.
@@ -10,7 +10,7 @@ Introduction
 ===========
 
 First instantiate a heroku_conn as above::
-    
+
     import heroku3
     heroku_conn = heroku3.from_key('YOUR_API_KEY')
 
@@ -44,15 +44,15 @@ Get the unique ID of the last request sent to heroku to give them for debugging:
 General notes about list Objects
 --------------------------------
 
-The new heroku3 API gives greater control over the interaction of the returned data. Primarily this 
-centres around calls to the api which result in list objects being returned. 
+The new heroku3 API gives greater control over the interaction of the returned data. Primarily this
+centres around calls to the api which result in list objects being returned.
 e.g. multiple objects like apps, addons, releases etc.
 
 Throughout the docs you'll see references to using limit & order_by. Wherever you see these, you *should* be able to use *limit*, *order_by*, *sort* and *valrange*.
 
 You can control ordering, limits and pagination by supplying the following keywords::
 
-    order_by=<'id'|'version'>  
+    order_by=<'id'|'version'>
     limit=<num>
     valrange=<string> - See api docs for this, This value is passed straight through to the API call *as is*.
     sort=<'asc'|'desc'>
@@ -78,11 +78,11 @@ List objects can be referred to directly by *any* of their primary keys too::
     dyno = heroku_conn.apps()['myapp_id'].dynos()['web.1']
     proc = heroku_conn.apps()['my_app'].process_formation()['web']
 
-**Be careful if you use *limit* in a list call *and* refer directly to an primary key** 
+**Be careful if you use *limit* in a list call *and* refer directly to an primary key**
 E.g.Probably stupid...::
 
     dyno = heroku_conn.apps()['myapp'].dynos(limit=1)['web.1']
-    
+
 General Notes on Objects
 ------------------------
 
@@ -93,7 +93,7 @@ e.g.
 
     >>>print feature.command
     bundle exec rails server -p $PORT
-    
+
     >>>print feature.created_at
     2012-01-01T12:00:00Z
 
@@ -114,11 +114,11 @@ Switching Accounts Mid Flow
 ---------------------------
 
 It is also possible to change the underlying heroku_connection at any point on any object or listobject by creating a new heroku_conn and calling change_connection::
-    
+
     heroku_conn1 = heroku3.from_key('YOUR_API_KEY')
     heroku_conn2 = heroku3.from_key('ANOTHER_API_KEY')
     app = heroku_conn1.apps()['MYAPP']
-    app.change_connection(heroku_conn2) 
+    app.change_connection(heroku_conn2)
     app.config() # this call will use heroku_conn2
     ## or on list objects
     apps = heroku_conn1.apps()
@@ -238,6 +238,17 @@ Update/Upgrade an Addon::
     addon = addon.upgrade(plan_id_or_name='<name>')
     addon = addon.upgrade(plan_id_or_name='<id>')
 
+Buildpacks
+~~~~~~~~~~~~~
+
+Update all buildpacks::
+
+    buildpack_urls = ['https://github.com/some/buildpack', 'https://github.com/another/buildpack']
+    app.update_buildpacks(buildpack_urls)
+
+*N.B. buildpack_urls can also be empty. This clears all buildpacks.*
+
+
 App Labs/Features
 ~~~~~~~~~~~~~
 
@@ -279,8 +290,8 @@ Update a Transfer's state::
     transfer.update("Pending")
     transfer.update("Declined")
     transfer.update("Accepted")
-    
-    
+
+
 Collaborators
 ~~~~~~~~~~~~~
 
@@ -340,7 +351,7 @@ Domains
 ~~~~~~~
 
 Get a list of domains configured for this app::
-    
+
     domainlist = app.domains(order_by='id')
 
 Add a domain to this app::
@@ -418,7 +429,7 @@ Scale your Procfile processes::
     app.process_formation()['web'].scale(2) # run 2 dynos
     app.process_formation()['web'].scale(0) # don't run any dynos
     proc = app.scale_formation_process(<formation_id_or_name>, <quantity>)
-        
+
 Resize your Procfile Processes::
 
     app.process_formation()['web'].resize(2) # for 2X
@@ -492,7 +503,7 @@ Get a specific OAuthAuthorization::
 
     authorization = authorizations[<oauthauthorization_id>]
     authorization = heroku_conn.oauthauthorization(oauthauthorization_id)
-    
+
 Create an OAuthAuthorization::
 
     authorization = heroku_conn.oauthauthorization_create(scope, oauthclient_id=None, description=None)
@@ -513,7 +524,7 @@ Get a specific OAuthClient::
 
     client = clients[<oauthclient_id>]
     client = heroku_conn.oauthclient(oauthclient_id)
-    
+
 Create an OAuthClient::
 
     client = heroku_conn.oauthclient_create(name, redirect_uri)
@@ -578,7 +589,7 @@ Note: logging is now achieved by the following method::
     requests_log = logging.getLogger("requests.packages.urllib3")
     requests_log.setLevel(logging.INFO)
     requests_log.propagate = True
-    
+
     heroku_conn.ratelimit_remaining()
 
     >>>INFO:requests.packages.urllib3.connectionpool:Starting new HTTPS connection (1): api.heroku.com

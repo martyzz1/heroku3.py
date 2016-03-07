@@ -162,6 +162,13 @@ for app in apps:
     #addon.upgrade(plan_id_or_name='heroku-postgresql:basic')
     #addon.delete()
 
+#buildpack_urls = [
+#    'https://github.com/some/buildpack', 'https://github.com/another/buildpack'
+#]
+#app.update_buildpacks([buildpack_urls])
+#buildpack_urls can also be empty. This clears all buildpacks:
+#app.update_buildpacks([])
+
 #app.delete()
 
 print heroku_conn._last_request_id
