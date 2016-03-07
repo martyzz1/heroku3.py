@@ -123,7 +123,7 @@ class HerokuCore(object):
                     range_str = "{0} ..;".format(order_by)
                 else:
                     range_str = "id ..;"
-                
+
                 if not sort is None:
                     assert(sort == 'asc' or sort == 'desc')
                     range_str += " order={0}".format(sort)

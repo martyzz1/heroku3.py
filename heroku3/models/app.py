@@ -464,6 +464,21 @@ class App(BaseResource):
         r.raise_for_status()
         return self.releases()[-1]
 
+    def update_buildpacks(self, buildpack_urls):
+        payload = {
+            'updates': [
+                {'buildpack': url} for url in buildpack_urls
+            ]
+        }
+
+        r = self._h._http_resource(
+            method='PUT',
+            resource=('apps', self.id, 'buildpack-installations'),
+            data=self._h._resource_serialize(payload)
+        )
+        r.raise_for_status()
+        return r.ok
+
 
 class AppTransfer(BaseResource):
     _strs = ['id', 'state']
