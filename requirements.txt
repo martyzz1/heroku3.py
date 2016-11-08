@@ -1,2 +1,2 @@
-requests>=1.2.3
-python-dateutil==2.1
+requests>=2.11.1
+python-dateutil>=2.5.3

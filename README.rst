@@ -91,23 +91,23 @@ e.g.
 
 `Formation <https://devcenter.heroku.com/articles/platform-api-reference#formation>`_ Object::
 
-    >>>print feature.command
+    >>>print(feature.command)
     bundle exec rails server -p $PORT
 
-    >>>print feature.created_at
+    >>>print(feature.created_at)
     2012-01-01T12:00:00Z
 
-    >>>print feature.id
+    >>>print(feature.id)
     01234567-89ab-cdef-0123-456789abcdef
 
-    >>>print feature.quantity
+    >>>print(feature.quantity)
     1
-    >>>print feature.size
+    >>>print(feature.size)
     1
-    >>>print feature.type
+    >>>print(feature.type)
     web
 
-    >>>print feature.updated_at
+    >>>print(feature.updated_at)
     2012-01-01T12:00:00Z
 
 Switching Accounts Mid Flow
@@ -341,7 +341,7 @@ Update Multiple config Variables::
 Check if a var exists::
 
     if 'KEY' in config:
-        print "KEY = {0}".format(config[KEY])
+        print("KEY = {0}".format(config[KEY]))
 
 Get dict of config vars::
 
@@ -463,7 +463,7 @@ Access the logs::
     log = heroku_conn.get_app_log(<app_id_or_name>, dyno='web.1', lines=2, source='app', timeout=False)
     log = app.get_log()
     log = app.get_log(lines=100)
-    print app.get_log(dyno='web.1', lines=2, source='app')
+    print(app.get_log(dyno='web.1', lines=2, source='app'))
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from down to created
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from created to starting
 
@@ -474,7 +474,7 @@ You can even stream the tail::
     log = heroku_conn.stream_app_log(<app_id_or_name>, lines=1, timeout=100)
     #or
     for line in app.stream_log(lines=1):
-         print line
+         print(line)
 
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from down to created
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from created to starting
@@ -556,7 +556,7 @@ List all releases::
 release information::
 
     for release in app.releases():
-        print "{0}-{1} released by {2} on {3}".format(release.id, release.description, release.user.name, release.created_at)
+        print("{0}-{1} released by {2} on {3}".format(release.id, release.description, release.user.name, release.created_at))
 
 Rollbck to a release::
 
