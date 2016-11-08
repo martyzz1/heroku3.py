@@ -116,7 +116,7 @@ for app in apps:
 #logs = app.get_log(lines=100)
 #print(logs)
 
-#print app.domains(limit=1)
+#print(app.domains(limit=1))
 #dyno = app.run_command('fab -l', printout=True)
 #dyno.remove()
 #proc = heroku_conn.apps()['testy123app'].process_formation()['web']
