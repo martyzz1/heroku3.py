@@ -463,7 +463,7 @@ Access the logs::
     log = heroku_conn.get_app_log(<app_id_or_name>, dyno='web.1', lines=2, source='app', timeout=False)
     log = app.get_log()
     log = app.get_log(lines=100)
-    print app.get_log(dyno='web.1', lines=2, source='app')
+    print(app.get_log(dyno='web.1', lines=2, source='app'))
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from down to created
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from created to starting
 
@@ -474,7 +474,7 @@ You can even stream the tail::
     log = heroku_conn.stream_app_log(<app_id_or_name>, lines=1, timeout=100)
     #or
     for line in app.stream_log(lines=1):
-         print line
+         print(line)
 
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from down to created
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from created to starting
@@ -556,7 +556,7 @@ List all releases::
 release information::
 
     for release in app.releases():
-        print "{0}-{1} released by {2} on {3}".format(release.id, release.description, release.user.name, release.created_at)
+        print("{0}-{1} released by {2} on {3}".format(release.id, release.description, release.user.name, release.created_at))
 
 Rollbck to a release::
 
