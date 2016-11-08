@@ -91,23 +91,23 @@ e.g.
 
 `Formation <https://devcenter.heroku.com/articles/platform-api-reference#formation>`_ Object::
 
-    >>>print feature.command
+    >>>print(feature.command)
     bundle exec rails server -p $PORT
 
-    >>>print feature.created_at
+    >>>print(feature.created_at)
     2012-01-01T12:00:00Z
 
-    >>>print feature.id
+    >>>print(feature.id)
     01234567-89ab-cdef-0123-456789abcdef
 
-    >>>print feature.quantity
+    >>>print(feature.quantity)
     1
-    >>>print feature.size
+    >>>print(feature.size)
     1
-    >>>print feature.type
+    >>>print(feature.type)
     web
 
-    >>>print feature.updated_at
+    >>>print(feature.updated_at)
     2012-01-01T12:00:00Z
 
 Switching Accounts Mid Flow
@@ -341,7 +341,7 @@ Update Multiple config Variables::
 Check if a var exists::
 
     if 'KEY' in config:
-        print "KEY = {0}".format(config[KEY])
+        print("KEY = {0}".format(config[KEY]))
 
 Get dict of config vars::
 
