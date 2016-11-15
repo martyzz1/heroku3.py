@@ -3,7 +3,7 @@ import select
 import ssl
 import os
 #from pprint import pprint
-from urlparse import urlparse, uses_netloc
+from urllib.parse import urlparse, uses_netloc
 uses_netloc.append('rendezvous')
 
 
@@ -55,6 +55,6 @@ class Rendezvous():
                 if not data:
                     break
                 if self.printout:
-                    print (data.rstrip('\n'))
+                    print(data.rstrip('\n'))
                 self.data += data
         return self.data
