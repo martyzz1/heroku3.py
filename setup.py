@@ -23,14 +23,14 @@ required = [
 
 setup(
     name='heroku3',
-    version='3.1.4',
+    version='3.2.0',
     description='Heroku API Wrapper.',
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
     author='Martin Moss',
     author_email='martin_moss@btinternet.com',
     url='https://github.com/martyzz1/heroku3.py',
-    download_url='https://github.com/martyzz1/heroku3.py/tarball/v3.1.4',
+    download_url='https://github.com/martyzz1/heroku3.py/tarball/v3.2.0',
     packages=['heroku3'],
     package_data={'': ['LICENSE', ]},
     include_package_data=True,
@@ -44,7 +44,11 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        # 'Programming Language :: Python :: 3.0',
-        # 'Programming Language :: Python :: 3.1',
+        'Programming Language :: Python :: 3.0',
+        'Programming Language :: Python :: 3.1',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ),
 )
