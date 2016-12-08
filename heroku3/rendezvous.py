@@ -3,7 +3,7 @@ import select
 import ssl
 import os
 #from pprint import pprint
-from urllib.parse import urlparse, uses_netloc
+from six.moves.urllib.parse import urlparse, uses_netloc
 uses_netloc.append('rendezvous')
 
 
