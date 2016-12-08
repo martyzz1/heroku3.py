@@ -1,5 +1,6 @@
 from . import BaseResource
 
+
 class Buildpack(BaseResource):
 
     _strs = [ 'url' ]
@@ -10,5 +11,3 @@ class Buildpack(BaseResource):
 
     def __repr__(self):
         return "<buildpack {}'>".format(self.url)
-
-

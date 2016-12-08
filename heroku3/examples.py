@@ -1,7 +1,9 @@
 # coding=utf-8
 import os
+from pprint import pprint  # noqa
+
 import heroku3
-from pprint import pprint# noqa
+
 #import socket
 
 #import httplib

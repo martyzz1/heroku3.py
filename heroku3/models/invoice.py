@@ -13,5 +13,3 @@ class Invoice(BaseResource):
 
     def __repr__(self):
         return "<invoice '{}-{}'>".format(self.id,self.number)
-
-  

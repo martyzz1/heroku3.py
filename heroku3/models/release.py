@@ -1,4 +1,4 @@
-from .  import BaseResource, User
+from . import BaseResource, User
 
 
 class Release(BaseResource):

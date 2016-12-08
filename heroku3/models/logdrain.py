@@ -1,4 +1,4 @@
-from .  import BaseResource
+from . import BaseResource
 from .addon import Addon
 
 
