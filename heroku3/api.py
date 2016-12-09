@@ -264,10 +264,16 @@ class Heroku(HerokuCore):
     def app(self, id_or_name):
         return self._get_resource(('apps/{0:s}'.format(id_or_name)), App)
 
-    def create_app(self, name=None, stack_id_or_name='cedar', region_id_or_name=None):
+    def create_app(self, name=None, stack_id_or_name='cedar', region_id_or_name=None, organization=None):
         """Creates a new app."""
 
         payload = {}
+
+        if organization:
+            payload['organization'] = organization
+            resource = ('organizations', 'apps')
+        else:
+            resource = ('apps',)
 
         if name:
             payload['name'] = name
@@ -281,7 +287,7 @@ class Heroku(HerokuCore):
         try:
             r = self._http_resource(
                 method='POST',
-                resource=('apps',),
+                resource=resource,
                 data=self._resource_serialize(payload)
             )
             r.raise_for_status()
