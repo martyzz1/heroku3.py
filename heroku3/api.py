@@ -7,25 +7,27 @@ heroku3.api
 This module provides the basic API interface for Heroku.
 """
 
+import sys
+from pprint import pprint  # noqa
+
+import requests
+from requests.exceptions import HTTPError
+
 from .compat import json
 from .helpers import is_collection
 from .models import Plan, RateLimit
-from .models.app import App
-from .models.addon import Addon
-from .models.dyno import Dyno
 from .models.account import Account
-from .models.key import Key
-from .models.invoice import Invoice
+from .models.account.feature import AccountFeature
+from .models.addon import Addon
+from .models.app import App
 from .models.configvars import ConfigVars
+from .models.dyno import Dyno
+from .models.invoice import Invoice
+from .models.key import Key
 from .models.logsession import LogSession
-from .models.oauth import OAuthClient, OAuthAuthorization, OAuthToken
+from .models.oauth import OAuthAuthorization, OAuthClient, OAuthToken
 from .rendezvous import Rendezvous
 from .structures import KeyedListResource, SSHKeyListResource
-from .models.account.feature import AccountFeature
-from requests.exceptions import HTTPError
-from pprint import pprint # noqa
-import requests
-import sys
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote

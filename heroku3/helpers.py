@@ -7,11 +7,10 @@ heroku3.helpers
 This module contians the helpers.
 """
 
+import sys
 from datetime import datetime
 
 from dateutil.parser import parse as parse_datetime
-
-import sys
 
 if sys.version_info > (3, 0):
     basestring = (str, bytes)

@@ -1,6 +1,6 @@
-from .  import BaseResource
 import sys
 
+from . import BaseResource
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote

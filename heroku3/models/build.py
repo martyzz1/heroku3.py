@@ -1,6 +1,6 @@
-from . import BaseResource
-from . import User
+from . import BaseResource, User
 from .buildpack import Buildpack
+
 
 class Build(BaseResource):
     _dates = ['created_at','updated_at']
@@ -14,4 +14,3 @@ class Build(BaseResource):
  
     def __repr__(self):
         return "<build '{0} - {1}'>".format(self.id, self.status)
-

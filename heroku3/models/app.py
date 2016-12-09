@@ -1,7 +1,9 @@
-from ..models import BaseResource, User, Stack
+import sys
+from pprint import pprint  # NOQA
+
+from ..models import BaseResource, Stack, User
 from ..rendezvous import Rendezvous
 from ..structures import DynoListResource
-
 from .addon import Addon
 from .build import Build
 from .collaborator import Collaborator
@@ -13,9 +15,6 @@ from .logdrain import LogDrain
 from .logsession import LogSession
 from .region import Region
 from .release import Release
-
-from pprint import pprint # NOQA
-import sys
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote

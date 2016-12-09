@@ -7,8 +7,9 @@ heroku3.core
 This module provides the base entrypoint for heroku3.py.
 """
 
-from .api import Heroku
 import requests
+
+from .api import Heroku
 
 
 def from_key(api_key, session=None, **kwargs):

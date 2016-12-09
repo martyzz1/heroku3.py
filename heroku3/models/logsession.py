@@ -1,5 +1,6 @@
-from .  import BaseResource
 import requests
+
+from . import BaseResource
 
 
 class LogSession(BaseResource):
