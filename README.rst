@@ -206,6 +206,7 @@ Get specific app::
     app = heroku_conn.apps[id_or_name]
 
 Create an app::
+
     app = heroku_conn.create_app(name=None, stack_id_or_name='cedar', region_id_or_name=<region_id>)
 
 Destroy an app (**Warning this is irreversible**)::
