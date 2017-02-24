@@ -19,6 +19,9 @@ class KeyedListResource(object):
         self._obj = None
         self._kwargs = {}
 
+    def __len__(self):
+        return len(self._items)
+
     def __repr__(self):
         return repr(self._items)
 
