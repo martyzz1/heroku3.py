@@ -1,7 +1,7 @@
 import sys
 from pprint import pprint  # NOQA
 
-from ..models import BaseResource, Stack, User
+from ..models import BaseResource, Stack, User, Organization
 from ..rendezvous import Rendezvous
 from ..structures import DynoListResource
 from .addon import Addon
@@ -29,7 +29,7 @@ class App(BaseResource):
     _ints = ['slug_size', 'repo_size']
     _bools = ['maintenance']
     _dates = ['archived_at', 'created_at', 'released_at', 'updated_at']
-    _map = {'region': Region, 'owner': User, 'stack': Stack}
+    _map = {'region': Region, 'owner': User, 'stack': Stack, 'organization': Organization}
     _pks = ['name', 'id']
 
     def __init__(self):

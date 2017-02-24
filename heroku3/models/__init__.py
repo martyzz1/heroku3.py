@@ -154,6 +154,19 @@ class User(BaseResource):
     def __repr__(self):
         return "<user '{0}'>".format(self.email)
 
+class Organization(BaseResource):
+    """Heroku Organization."""
+
+    _strs = ['id', 'name']
+    _pks = ['id', 'name']
+
+    def __init__(self):
+        self.app = None
+        super(Organization, self).__init__()
+
+    def __repr__(self):
+        return "<organization '{0}'>".format(self.name)
+
 
 #class Plan(BaseResource):
     #"""Heroku Addon."""
