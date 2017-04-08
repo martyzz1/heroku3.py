@@ -63,7 +63,7 @@ class HerokuCore(object):
 
         # We only want JSON back.
         #self._session.headers.update({'Accept': 'application/json'})
-        self._session.headers.update({'Accept': 'application/vnd.heroku+json; version=3', 'Content-Type': 'application/json'})
+        self._session.headers.update({'Accept': 'application/vnd.heroku+json; version=3.cedar-acm', 'Content-Type': 'application/json'})
 
     def __repr__(self):
         return '<heroku-core at 0x%x>' % (id(self))
