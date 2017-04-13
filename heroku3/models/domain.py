@@ -4,7 +4,7 @@ from . import BaseResource
 class Domain(BaseResource):
     """Heroku Domain."""
 
-    _strs = ['id', 'hostname', 'cname', 'kind', 'status']
+    _strs = ['id', 'hostname', 'cname', 'kind', 'status', 'acm_status']
     _dates = ['created_at', 'updated_at']
     _pks = ['hostname', 'id']
     order_by = 'domain'
