@@ -222,7 +222,7 @@ class App(BaseResource):
         payload = {'command': command, 'attach': attach, 'size': size}
         if env:
             payload['env'] = env
-            
+
         if size:
             payload['size'] = size
 
@@ -248,6 +248,50 @@ class App(BaseResource):
             resource=('apps', self.name, 'formation'),
             obj=Formation, app=self, **kwargs
         )
+
+    def batch_scale_formation_processes(self, updates):
+        """Scale formation processes in batch.
+
+        updates is a dictionary or iterable of 2-tuples of
+        formation_id_or_name to quantity.
+        """
+        payload = {}
+        payload['updates'] = []
+
+        for type, quantity in dict(updates).items():
+            assert(quantity == 0 or quantity)
+            payload['updates'].append({'type': type, 'quantity': quantity})
+
+        r = self._h._http_resource(
+            method='PATCH',
+            resource=('apps', self.id, 'formation'),
+            data=self._h._resource_serialize(payload)
+        )
+        r.raise_for_status()
+        decoded = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return self._h._process_items(decoded, obj=Formation)
+
+    def batch_resize_formation_processes(self, updates):
+        """Resize formation processes in batch.
+
+        updates is a dictionary or iterable of 2-tuples of
+        formation_id_or_name to size.
+        """
+        payload = {}
+        payload['updates'] = []
+
+        for type, size in dict(updates).items():
+            assert(size == 0 or size)
+            payload['updates'].append({'type': type, 'size': size})
+
+        r = self._h._http_resource(
+            method='PATCH',
+            resource=('apps', self.id, 'formation'),
+            data=self._h._resource_serialize(payload)
+        )
+        r.raise_for_status()
+        decoded = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return self._h._process_items(decoded, obj=Formation)
 
     def scale_formation_process(self, formation_id_or_name, quantity):
         assert(quantity == 0 or quantity)
