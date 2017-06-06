@@ -294,12 +294,16 @@ class Heroku(HerokuCore):
             item = self._resource_deserialize(r.content.decode("utf-8"))
             app = App.new_from_dict(item, h=self)
         except HTTPError as e:
+            saved_exc = (sys.exc_type, sys.exc_value, sys.exc_traceback)
             if "Name is already taken" in str(e):
-                print("Warning - {0:s}".format(e))
-                app = self.app(name)
-                pass
+                try:
+                    app = self.app(name)
+                except:
+                    raise saved_exc[0], saved_exc[1], saved_exc[2]
+                else:
+                    print("Warning - {0:s}".format(e))
             else:
-                raise e
+                raise saved_exc[0], saved_exc[1], saved_exc[2]
         return app
 
     def keys(self, **kwargs):
