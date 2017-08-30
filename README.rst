@@ -203,7 +203,7 @@ List all apps::
 Get specific app::
 
     app = heroku_conn.app(<id_or_name>)
-    app = heroku_conn.apps[id_or_name]
+    app = heroku_conn.apps()[id_or_name]
 
 Create an app::
 
