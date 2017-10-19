@@ -10,6 +10,8 @@ This module provides the basic API interface for Heroku.
 import sys
 from pprint import pprint  # noqa
 
+from future.utils import raise_
+
 import requests
 from requests.exceptions import HTTPError
 
@@ -299,11 +301,11 @@ class Heroku(HerokuCore):
                 try:
                     app = self.app(name)
                 except:
-                    raise saved_exc[0], saved_exc[1], saved_exc[2]
+                    raise_(saved_exc[0], saved_exc[1], saved_exc[2])
                 else:
                     print("Warning - {0:s}".format(e))
             else:
-                raise saved_exc[0], saved_exc[1], saved_exc[2]
+                raise_(saved_exc[0], saved_exc[1], saved_exc[2])
         return app
 
     def keys(self, **kwargs):
