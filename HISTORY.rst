@@ -2,13 +2,16 @@ History
 -------
 
 3.2.0-2
++++++++
 * Various fixes for python3
 * Add newer features from Heroku API, support for Organisations
 
 3.1.4
++++++
 * bugfixes
 
 3.1.3 (2015-03-12)
+++++++++++++++++++
 * removed debug
 
 3.1.0 (2014-11-24)
