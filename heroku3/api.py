@@ -10,8 +10,6 @@ This module provides the basic API interface for Heroku.
 import sys
 from pprint import pprint  # noqa
 
-from future.utils import raise_
-
 import requests
 from requests.exceptions import HTTPError
 
@@ -296,16 +294,15 @@ class Heroku(HerokuCore):
             item = self._resource_deserialize(r.content.decode("utf-8"))
             app = App.new_from_dict(item, h=self)
         except HTTPError as e:
-            saved_exc = sys.exc_info()
             if "Name is already taken" in str(e):
                 try:
                     app = self.app(name)
                 except:
-                    raise_(saved_exc[0], saved_exc[1], saved_exc[2])
+                    raise
                 else:
                     print("Warning - {0:s}".format(e))
             else:
-                raise_(saved_exc[0], saved_exc[1], saved_exc[2])
+                raise
         return app
 
     def keys(self, **kwargs):
