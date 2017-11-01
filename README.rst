@@ -1,5 +1,12 @@
 Heroku3.py
-=========
+==========
+
+.. image:: https://www.travis-ci.org/cans/heroku3.py.svg?branch=master
+   :target: https://www.travis-ci.org/cans/heroku3.py
+
+.. image:: https://coveralls.io/repos/github/cans/heroku3.py/badge.svg?branch=master
+   :target: https://coveralls.io/github/cans/heroku3.py?branch=master
+
 
 This is the updated Python wrapper for the Heroku `API V3. <https://devcenter.heroku.com/articles/platform-api-reference>`_
 The Heroku REST API allows Heroku users to manage their accounts, applications, addons, and

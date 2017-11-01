@@ -1,5 +1,7 @@
-venv
+*~
+*.pyc
+.cache/
 build/
 dist/
 heroku.egg-info/
-*.pyc
+venv
