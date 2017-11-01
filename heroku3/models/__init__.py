@@ -8,8 +8,6 @@ This module contains the models that comprise the Heroku API.
 """
 
 from ..helpers import to_python
-#from .structures import DynoListResource#, filtered_key_list_resource_factory
-#from .rendezvous import Rendezvous
 from pprint import pprint # noqa
 import sys
 
@@ -21,14 +19,14 @@ else:
 
 class BaseResource(object):
 
-    _strs = []
-    _ints = []
-    _dates = []
+    _arrays = {}
     _bools = []
     _dicts = []
+    _dates = []
+    _ints = []
     _map = {}
-    _arrays = {}
     _pks = []
+    _strs = []
     order_by = 'id'
 
     def __init__(self):
@@ -41,13 +39,26 @@ class BaseResource(object):
 
     def _bootstrap(self):
         """Bootstraps the model object based on configured values."""
-
         for attr in self._keys():
             setattr(self, attr, None)
 
-    def _keys(self):
-        return self._strs + self._ints + self._dates + self._bools + \
-            list(self._map.keys()) + list(self._arrays.keys())
+    @classmethod
+    def _keys(cls):
+        """The list of user declared attributes for this model.
+
+        Returns:
+            List[str]: the names of the user declared attributes.
+        """
+        # self._pks is (should be, don't see where this is enforeced) a subset
+        # of the set below, hence there is no need to include it.
+        return (list(cls._arrays.keys()) +
+                cls._bools +
+                cls._dates +
+                cls._dicts +
+                cls._ints +
+                list(cls._map.keys()) +
+                cls._strs
+                )
 
     @property
     def _id(self):
@@ -83,18 +94,17 @@ class BaseResource(object):
     @classmethod
     def new_from_dict(cls, d, h=None, **kwargs):
 
-        d = to_python(
-            obj=cls(),
-            in_dict=d,
-            str_keys=cls._strs,
-            int_keys=cls._ints,
-            date_keys=cls._dates,
-            bool_keys=cls._bools,
-            dict_keys=cls._dicts,
-            object_map=cls._map,
-            array_map=cls._arrays,
-            _h=h
-        )
+        d = to_python(obj=cls(),
+                      in_dict=d,
+                      strs=cls._strs,
+                      ints=cls._ints,
+                      dates=cls._dates,
+                      bools=cls._bools,
+                      dicts=cls._dicts,
+                      objects=cls._map,
+                      arrays=cls._arrays,
+                      _h=h,
+                      )
 
         d.__dict__.update(kwargs)
 

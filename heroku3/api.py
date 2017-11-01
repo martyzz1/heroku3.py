@@ -32,10 +32,12 @@ from .structures import KeyedListResource, SSHKeyListResource
 if sys.version_info > (3, 0):
     from urllib.parse import quote
 else:
-    from urllib import quote # noqa
+    from urllib import quote  # noqa
 
 
 HEROKU_URL = 'https://api.heroku.com'
+HEROKU_HEADERS = {'Accept': 'application/vnd.heroku+json; version=3.cedar-acm',
+                  'Content-Type': 'application/json'}
 
 
 class RateLimitExceeded(Exception):
@@ -62,8 +64,7 @@ class HerokuCore(object):
         self._last_request_id = None
 
         # We only want JSON back.
-        #self._session.headers.update({'Accept': 'application/json'})
-        self._session.headers.update({'Accept': 'application/vnd.heroku+json; version=3.cedar-acm', 'Content-Type': 'application/json'})
+        self._session.headers.update(HEROKU_HEADERS)
 
     def __repr__(self):
         return '<heroku-core at 0x%x>' % (id(self))
@@ -109,10 +110,16 @@ class HerokuCore(object):
         except ValueError:
             raise ResponseError('The API Response was not valid.')
 
-    def _get_headers_for_request(self, method, url, legacy=False, order_by=None, limit=None, valrange=None, sort=None):
+    def _get_headers_for_request(self,
+                                 legacy=False,
+                                 order_by=None,
+                                 limit=None,
+                                 valrange=None,
+                                 sort=None,
+                                 ):
         headers = {}
         if legacy is True:
-            #Nasty patch session to fallback to old api
+            # Nasty patch session to fallback to old api
             headers.update({'Accept': 'application/json'})
 
         else:
@@ -126,7 +133,7 @@ class HerokuCore(object):
                 else:
                     range_str = "id ..;"
 
-                if not sort is None:
+                if sort is not None:
                     assert(sort == 'asc' or sort == 'desc')
                     range_str += " order={0}".format(sort)
                     seperator = ','
@@ -135,21 +142,33 @@ class HerokuCore(object):
 
                 if limit:
                     if limit > 1000:
-                        raise MaxRangeExceeded("Your *limit* ({0}) argument is greater than the maximum allowed value of 1000".format(limit))
+                        raise MaxRangeExceeded("Your *limit* ({0}) argument is"
+                                               " greater than the maximum "
+                                               "allowed value of 1000"
+                                               .format(limit))
                     range_str += "{0}max={1}".format(seperator, limit)
 
                 range_str += ';'
-                #print(range_str)
+                # print(range_str)
                 if valrange:
-                    #If given, This should override limit and order_by
+                    # If given, This should override limit and order_by
                     range_str = valrange
 
-            if not range_str == None:
+            if range_str is not None:
                 headers.update({'Range': range_str})
 
         return headers
 
-    def _http_resource(self, method, resource, params=None, data=None, legacy=False, order_by=None, limit=None, valrange=None, sort=None):
+    def _http_resource(self,
+                       method,
+                       resource,
+                       params=None,
+                       data=None,
+                       legacy=False,
+                       order_by=None,
+                       limit=None,
+                       valrange=None,
+                       sort=None):
         """Makes an HTTP request."""
 
         if not is_collection(resource):
@@ -157,7 +176,11 @@ class HerokuCore(object):
 
         url = self._url_for(*resource)
 
-        headers = self._get_headers_for_request(method, url, legacy=legacy, order_by=order_by, limit=limit, valrange=valrange, sort=sort)
+        headers = self._get_headers_for_request(legacy=legacy,
+                                                order_by=order_by,
+                                                limit=limit,
+                                                valrange=valrange,
+                                                sort=sort)
 
         r = self._session.request(method, url, params=params, data=data, headers=headers)
 
@@ -167,8 +190,8 @@ class HerokuCore(object):
         if 'Request-Id' in r.headers:
             self._last_request_id = r.headers['Request-Id']
 
-        #if 'Accept-Ranges' in r.headers:
-            #print("Accept-Ranges = {0}".format(r.headers['Accept-Ranges']))
+        # if 'Accept-Ranges' in r.headers:
+        #     print("Accept-Ranges = {0}".format(r.headers['Accept-Ranges']))
 
         if r.status_code == 422:
             http_error = HTTPError('%s - %s Client Error: %s' %
@@ -177,7 +200,7 @@ class HerokuCore(object):
             raise http_error
 
         if r.status_code == 429:
-            #Rate limit reached
+            # Rate limit reached
             raise RateLimitExceeded("You have exceeded your rate limit \n{0}".format(r.content.decode("utf-8")))
 
         if (not str(r.status_code).startswith('2')) and (not r.status_code in [304]):
@@ -208,7 +231,7 @@ class HerokuCore(object):
 
         items = self._resource_deserialize(r.content.decode("utf-8"))
         if r.status_code == 206 and 'Next-Range' in r.headers and not limit:
-            #We have unexpected chunked response - deal with it
+            # We have unexpected chunked response - deal with it
             valrange = r.headers['Next-Range']
             print("Warning Response was chunked, Loading the next Chunk using the following next-range header returned by Heroku '{0}'. WARNING - This breaks randomly depending on your order_by name. I think it's only guarenteed to work with id's - Looks to be a Heroku problem".format(valrange))
             new_items = self._get_data(resource, params=params, legacy=legacy, order_by=order_by, limit=limit, valrange=valrange, sort=sort)
