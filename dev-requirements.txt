@@ -1,0 +1,8 @@
+autopep8
+flake8
+ipdb
+importmagic
+jedi
+rope
+yapf
+-r tests-requirements.txt
