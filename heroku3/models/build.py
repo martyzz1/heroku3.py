@@ -1,5 +1,6 @@
 from . import BaseResource, User
 from .buildpack import Buildpack
+from .slug import Slug
 from .sourceblob import SourceBlob
 
 
@@ -7,7 +8,7 @@ class Build(BaseResource):
     _dates = ['created_at','updated_at']
     _strs  = ['id','status']
     _pks   = ['id']
-    _map   = {'source_blob': SourceBlob, 'user' : User }
+    _map   = {'slug': Slug, 'source_blob': SourceBlob, 'user' : User }
     _arrays = { 'buildpacks' : Buildpack }
 
     def __init__(self):
