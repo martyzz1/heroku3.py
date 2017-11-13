@@ -3,7 +3,7 @@ from .addon import Addon
 
 
 class LogDrain(BaseResource):
-    _strs = ['id', 'url']
+    _strs = ['id', 'url', 'token']
     _map = {'addon': Addon}
     _dates = ['created_at', 'updated_at']
     _pks = ['id']
