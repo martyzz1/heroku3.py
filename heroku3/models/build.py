@@ -1,12 +1,13 @@
 from . import BaseResource, User
 from .buildpack import Buildpack
+from .sourceblob import SourceBlob
 
 
 class Build(BaseResource):
     _dates = ['created_at','updated_at']
     _strs  = ['id','status']
     _pks   = ['id']
-    _map   = {'user' : User }
+    _map   = {'source_blob': SourceBlob, 'user' : User }
     _arrays = { 'buildpacks' : Buildpack }
 
     def __init__(self):
