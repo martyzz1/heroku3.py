@@ -492,6 +492,18 @@ class App(BaseResource):
 
         return LogSession.new_from_dict(item, h=self._h, app=self)
 
+    def create_release(self, slug_id):
+       """Create a new release for this app."""
+       payload = {'slug': slug_id}
+       r = self._h._http_resource(
+           method='POST',
+           resource=('apps', self.name, 'releases'),
+           data=self._h._resource_serialize(payload),
+       )
+       r.raise_for_status()
+       item = self._h._resource_deserialize(r.content.decode("utf-8"))
+       return Release.new_from_dict(item, h=self._h, app=self)
+
     def releases(self, **kwargs):
         """The releases for this app."""
         return self._h._get_resources(
