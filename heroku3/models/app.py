@@ -1,6 +1,7 @@
 import sys
 from pprint import pprint  # NOQA
 
+from heroku3.models.slug import Slug
 from ..models import BaseResource, Stack, User, Organization
 from ..rendezvous import Rendezvous
 from ..structures import DynoListResource
@@ -536,6 +537,13 @@ class App(BaseResource):
         )
         r.raise_for_status()
         return r.ok
+
+    def slug(self, slug_id):
+        """Get a slug by id."""
+        return self._h._get_resources(
+            resource=('apps', self.name, 'slugs', slug_id),
+            obj=Slug, app=self,
+        )
 
 
 class AppTransfer(BaseResource):
