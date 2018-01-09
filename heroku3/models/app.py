@@ -158,6 +158,17 @@ class App(BaseResource):
         r.raise_for_status()
         item = self._h._resource_deserialize(r.content.decode("utf-8"))
         return ConfigVars.new_from_dict(item, h=self._h, app=self)
+    
+    def get_domain(self, hostname_or_id):
+        """Get the domain for this app.."""
+        r = self._h._http_resource(
+            method='GET',
+            resource=('apps', self.name, 'domains', hostname_or_id),
+        )
+        r.raise_for_status()
+        
+        item = self._h._resource_deserialize(resp.content.decode("utf-8"))
+        return Domain.new_from_dict(item, h=self._h, app=self)
 
     def domains(self, **kwargs):
         """The domains for this app."""
