@@ -39,7 +39,7 @@ class Rendezvous():
 
         ssl_sock.settimeout(20)
         ssl_sock.connect((self.hostname, self.port))
-        ssl_sock.write(self.secret.encode())
+        ssl_sock.write(self.secret.encode('utf8'))
         data = ssl_sock.read().decode('utf8')
         if not data.startswith("rendezvous"):
             raise InvalidResponseFromRendezVous("The Response from the rendezvous server wasn't as expected. Response was - {0}".format(data))
