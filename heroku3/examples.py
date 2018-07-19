@@ -94,8 +94,8 @@ for app in apps:
 
 #app.rename('testy223')
 
-#print(app.enable_maintence_mode())
-#print(app.disable_maintence_mode())
+#print(app.enable_maintenance_mode())
+#print(app.disable_maintenance_mode())
 #app.enable_feature('user-env-compile')
 #app.disable_feature('user-env-compile')
 #print(app.labs())
