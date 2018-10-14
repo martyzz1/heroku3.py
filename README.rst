@@ -4,6 +4,9 @@ Heroku3.py
 .. image:: https://circleci.com/gh/martyzz1/heroku3.py.svg?style=svg
    :target: https://circleci.com/gh/martyzz1/heroku3.py
 
+.. image:: https://coveralls.io/repos/github/martyzz1/heroku3.py/badge.svg?branch=master
+   :target: https://coveralls.io/github/martyzz1/heroku3.py?branch=master
+
 .. image:: https://coveralls.io/repos/github/cans/heroku3.py/badge.svg?branch=master
    :target: https://coveralls.io/github/cans/heroku3.py?branch=master
 
