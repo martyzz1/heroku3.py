@@ -17,13 +17,13 @@ if sys.argv[-1] == 'publish':
 required = [
     'requests>=1.2.3',
     'simplejson==3.3.1',
-    'python-dateutil==2.6.0',
+    'python-dateutil>=2.6.0',
 ]
 
 
 setup(
     name='heroku3',
-    version='3.3.0',
+    version='3.3.1',
     description='Heroku API Wrapper.',
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
