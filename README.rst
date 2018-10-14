@@ -7,8 +7,8 @@ Heroku3.py
 .. image:: https://coveralls.io/repos/github/martyzz1/heroku3.py/badge.svg?branch=master
    :target: https://coveralls.io/github/martyzz1/heroku3.py?branch=master
 
-.. image:: https://coveralls.io/repos/github/cans/heroku3.py/badge.svg?branch=master
-   :target: https://coveralls.io/github/cans/heroku3.py?branch=master
+.. image:: https://www.travis-ci.org/martyzz1/heroku3.py.svg?branch=master
+   :target: https://www.travis-ci.org/martyzz1/heroku3.py
 
 
 This is the updated Python wrapper for the Heroku `API V3. <https://devcenter.heroku.com/articles/platform-api-reference>`_
