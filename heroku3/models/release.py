@@ -1,11 +1,12 @@
 from . import BaseResource, User
+from .slug import Slug
 
 
 class Release(BaseResource):
     _strs = ['description', 'id', 'user', 'commit', 'addons']
     _ints = ['version']
     _dates = ['created_at', 'updated_at']
-    _map = {'user': User}
+    _map = {'slug': Slug, 'user': User}
     _pks = ['id', 'version']
     order_by = 'version'
 
