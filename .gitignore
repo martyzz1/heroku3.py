@@ -5,3 +5,4 @@ build/
 dist/
 heroku.egg-info/
 venv
+.circleci/processed.yml
