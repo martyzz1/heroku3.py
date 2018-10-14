@@ -3,6 +3,7 @@ History
 
 3.4.0
 +++++
+* Support for python 2.6 dropped
 * Add Tests
 * Get project building on circleci/travis-ci & coveralls
 * Adding Slug to Release Models
