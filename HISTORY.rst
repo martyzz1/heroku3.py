@@ -1,6 +1,13 @@
 History
 -------
 
+3.4.0
++++++
+* Add Tests
+* Get project building on circleci/travis-ci & coveralls
+* Adding Slug to Release Models
+* bugfixes
+
 3.2.0-2
 +++++++
 * Various fixes for python3
