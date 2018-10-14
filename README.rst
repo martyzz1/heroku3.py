@@ -1,6 +1,9 @@
 Heroku3.py
 ==========
 
+.. image:: https://img.shields.io/pypi/v/heroku3.svg
+   :target: https://pypi.org/project/heroku3
+   
 .. image:: https://circleci.com/gh/martyzz1/heroku3.py.svg?style=svg
    :target: https://circleci.com/gh/martyzz1/heroku3.py
 
@@ -9,7 +12,8 @@ Heroku3.py
 
 .. image:: https://www.travis-ci.org/martyzz1/heroku3.py.svg?branch=master
    :target: https://www.travis-ci.org/martyzz1/heroku3.py
-
+   
+.. image:: https://img.shields.io/pypi/pyversions/setuptools.svg
 
 This is the updated Python wrapper for the Heroku `API V3. <https://devcenter.heroku.com/articles/platform-api-reference>`_
 The Heroku REST API allows Heroku users to manage their accounts, applications, addons, and
