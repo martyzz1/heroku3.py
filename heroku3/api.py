@@ -323,7 +323,7 @@ class Heroku(HerokuCore):
                 except:
                     raise
                 else:
-                    print("Warning - {0:s}".format(e))
+                    print("Warning - {0:s}".format(str(e)))
             else:
                 raise
         return app
