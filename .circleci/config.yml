@@ -85,7 +85,8 @@ commands:
           name: run tests
           command: |
             . ~/venv/bin/activate
-            pytest --cov=heroku3 --cov-report=html
+            pytest --cov=heroku3 --cov-report=html --cov-branch
+            codecov
 
       - store_artifacts:
           path: coverage
