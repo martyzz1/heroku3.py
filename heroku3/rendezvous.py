@@ -14,7 +14,7 @@ class InvalidResponseFromRendezVous(Exception):
 
 
 class Rendezvous():
-    def __init__(self, url, printout=False):
+    def __init__(self, url, printout=False, timeout_secs=20):
         self.url = url
         urlp = urlparse(url)
         self.hostname = urlp.hostname
@@ -24,6 +24,7 @@ class Rendezvous():
         self.cert = os.path.abspath("{0}/data/cacert.pem".format(path))
         self.data = ""
         self.printout = printout
+        self.timeout_secs = timeout_secs
 
     def start(self):
 
@@ -37,7 +38,7 @@ class Rendezvous():
                             cert_reqs=ssl.CERT_REQUIRED,
                             ssl_version=ssl.PROTOCOL_TLSv1)
 
-        ssl_sock.settimeout(20)
+        ssl_sock.settimeout(self.timeout_secs)
         ssl_sock.connect((self.hostname, self.port))
         ssl_sock.write(self.secret.encode('utf8'))
         data = ssl_sock.read().decode('utf8')
