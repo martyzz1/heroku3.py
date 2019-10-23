@@ -103,7 +103,7 @@ class App(BaseResource):
 
         return r.ok
 
-    def install_addon(self, plan_id_or_name, config=None):
+    def install_addon(self, plan_id_or_name, config=None, attachment_name=None):
 
         payload = {}
         if not config:
@@ -111,6 +111,9 @@ class App(BaseResource):
 
         payload['plan'] = plan_id_or_name
         payload['config'] = config
+
+        if attachment_name:
+            payload['attachment'] = {'name': attachment_name}
 
         r = self._h._http_resource(
             method='POST',

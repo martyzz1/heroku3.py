@@ -241,6 +241,7 @@ Install an Addon::
     addon = app.install_addon(plan_id_or_name='<id>', config={})
     addon = app.install_addon(plan_id_or_name='<name>', config={})
     addon = app.install_addon(plan_id_or_name=addonservice.id, config={})
+    addon = app.install_addon(plan_id_or_name=addonservice.id, config={}, attachment_name='ADDON_ATTACHMENT_CUSTOM_NAME')
 
 Remove an Addon::
 
