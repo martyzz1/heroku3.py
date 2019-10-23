@@ -10,6 +10,7 @@ install:
   - pip install -r ./tests-requirements.txt
   - pip install coveralls
 script:
-  - py.test --cov=heroku3 --cov-report=html
+  - py.test --cov=heroku3 --cov-report=html --cov-branch
 after_success:
 - coveralls
+- codecov

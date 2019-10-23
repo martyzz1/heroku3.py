@@ -1,4 +1,5 @@
 backports.unittest_mock
+codecov
 coverage
 pytest
 pytest-cov
