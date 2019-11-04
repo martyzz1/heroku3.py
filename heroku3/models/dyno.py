@@ -24,7 +24,7 @@ class Dyno(BaseResource):
     def kill(self):
         r = self._h._http_resource(
             method='DELETE',
-            resource=('apps', self.app.id, 'dynos', self.id)
+            resource=('apps', self.app.id, 'dynos', self.name)
         )
 
         r.raise_for_status()
