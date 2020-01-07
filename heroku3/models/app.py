@@ -598,7 +598,7 @@ class AppTransfer(BaseResource):
 
 
 class AppFeature(BaseResource):
-    _strs = ['name', 'description', 'doc_url', 'id']
+    _strs = ['name', 'description', 'doc_url', 'id', 'state']
     _bools = ['enabled']
     _dates = ['created_at', 'updated_at']
     _pks = ['id', 'name']
