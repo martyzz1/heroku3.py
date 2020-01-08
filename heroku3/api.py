@@ -297,7 +297,7 @@ class Heroku(HerokuCore):
         r = self._http_resource(
             method='POST',
             resource=('app-setups',),
-            data=self._h._resource_serialize(payload)
+            data=self._resource_serialize(payload)
         )
         r.raise_for_status()
         item = self._resource_deserialize(r.content.decode("utf-8"))
