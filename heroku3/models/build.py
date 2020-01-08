@@ -6,13 +6,13 @@ from .sourceblob import SourceBlob
 
 class Build(BaseResource):
     _dates = ['created_at','updated_at']
-    _strs  = ['id','status']
+    _strs  = ['id','status', 'output_stream_url']
     _pks   = ['id']
     _map   = {'slug': Slug, 'source_blob': SourceBlob, 'user' : User }
     _arrays = { 'buildpacks' : Buildpack }
 
     def __init__(self):
         super(Build, self).__init__()
- 
+
     def __repr__(self):
         return "<build '{0} - {1}'>".format(self.id, self.status)

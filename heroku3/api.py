@@ -301,6 +301,7 @@ class Heroku(HerokuCore):
         )
         r.raise_for_status()
         item = self._resource_deserialize(r.content.decode("utf-8"))
+        pprint(item)
         return AppSetup.new_from_dict(item, h=self)
 
     def get_appsetup(self, app_setup_id):
