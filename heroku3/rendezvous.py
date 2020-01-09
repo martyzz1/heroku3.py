@@ -19,6 +19,8 @@ class Rendezvous():
         urlp = urlparse(url)
         self.hostname = urlp.hostname
         self.port = urlp.port
+        if not self.port:
+            self.port = 443
         self.secret = urlp.path[1:]
         path = os.path.dirname(os.path.realpath(__file__))
         self.cert = os.path.abspath("{0}/data/cacert.pem".format(path))
