@@ -3,7 +3,6 @@ import select
 import socket
 import ssl
 
-#from pprint import pprint
 from six.moves.urllib.parse import urlparse, uses_netloc
 
 uses_netloc.append('rendezvous')
@@ -34,13 +33,22 @@ class Rendezvous():
         # Require a certificate from the server. We used a self-signed certificate
         # so here ca_certs must be the server certificate itself.
 
-        ssl_sock = ssl.wrap_socket(s,
-                            ca_certs=self.cert,
-                            cert_reqs=ssl.CERT_REQUIRED,
-                            ssl_version=ssl.PROTOCOL_TLSv1)
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        context.verify_mode = ssl.CERT_REQUIRED
+        context.check_hostname = True
+        context.load_verify_locations(self.cert)
+        ssl_sock = context.wrap_socket(s, server_hostname=self.hostname)
 
-        ssl_sock.settimeout(20)
+        # ssl_sock = ssl.wrap_socket(
+        #    #s,
+        #    #ca_certs=self.cert,
+        #    #cert_reqs=ssl.CERT_REQUIRED,
+        #    #ssl_version=ssl.PROTOCOL_TLSv1_1
+        # )
+
+        ssl_sock.settimeout(30)
         ssl_sock.connect((self.hostname, self.port))
+        # ssl_sock.setblocking(1)
         ssl_sock.write(self.secret.encode('utf8'))
         data = ssl_sock.read().decode('utf8')
         if not data.startswith("rendezvous"):
