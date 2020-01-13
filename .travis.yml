@@ -3,13 +3,12 @@ python:
   - "3.6"
   - "3.5"
   - "3.4"
-  - "3.3"
   - "2.7"
-  - "2.6"
 install:
   - pip install -r ./tests-requirements.txt
   - pip install coveralls
 script:
-  - py.test --cov=heroku3 --cov-report=html
+  - py.test --cov=heroku3 --cov-report=html --cov-branch
 after_success:
 - coveralls
+- codecov

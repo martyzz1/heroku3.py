@@ -1,7 +1,6 @@
 # -*- coding: utf-8; -*-
 from __future__ import absolute_import, division, print_function
 
-from backports import unittest_mock
 import pytest
 import requests
 
@@ -29,11 +28,11 @@ def config_dict():
 
 
 @pytest.fixture
-def config_vars():
+def config_vars(config_dict, app, heroku_core):
     # Not using new_from_dict() to not spoil coverage
-    cfg = ConfigVars(config_dict(), app(), h=heroku_core())
-    cfg.data = config_dict()
-    cfg.app = app()
+    cfg = ConfigVars(config_dict, app, h=heroku_core)
+    cfg.data = config_dict
+    cfg.app = app
     return cfg
 
 

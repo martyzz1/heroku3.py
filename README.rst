@@ -1,12 +1,19 @@
 Heroku3.py
 ==========
 
-.. image:: https://www.travis-ci.org/cans/heroku3.py.svg?branch=master
-   :target: https://www.travis-ci.org/cans/heroku3.py
+.. image:: https://img.shields.io/pypi/v/heroku3.svg
+   :target: https://pypi.org/project/heroku3
 
-.. image:: https://coveralls.io/repos/github/cans/heroku3.py/badge.svg?branch=master
-   :target: https://coveralls.io/github/cans/heroku3.py?branch=master
+.. image:: https://circleci.com/gh/martyzz1/heroku3.py.svg?style=svg
+   :target: https://circleci.com/gh/martyzz1/heroku3.py
 
+.. image:: https://coveralls.io/repos/github/martyzz1/heroku3.py/badge.svg?branch=master
+   :target: https://coveralls.io/github/martyzz1/heroku3.py?branch=master
+
+.. image:: https://www.travis-ci.org/martyzz1/heroku3.py.svg?branch=master
+   :target: https://www.travis-ci.org/martyzz1/heroku3.py
+
+.. image:: https://img.shields.io/pypi/pyversions/setuptools.svg
 
 This is the updated Python wrapper for the Heroku `API V3. <https://devcenter.heroku.com/articles/platform-api-reference>`_
 The Heroku REST API allows Heroku users to manage their accounts, applications, addons, and
@@ -234,6 +241,7 @@ Install an Addon::
     addon = app.install_addon(plan_id_or_name='<id>', config={})
     addon = app.install_addon(plan_id_or_name='<name>', config={})
     addon = app.install_addon(plan_id_or_name=addonservice.id, config={})
+    addon = app.install_addon(plan_id_or_name=addonservice.id, config={}, attachment_name='ADDON_ATTACHMENT_CUSTOM_NAME')
 
 Remove an Addon::
 
@@ -561,15 +569,15 @@ List all releases::
     releaselist = app.releases()
     releaselist = app.releases(order_by='version')
 
-release information::
+Release information::
 
     for release in app.releases():
         print("{0}-{1} released by {2} on {3}".format(release.id, release.description, release.user.name, release.created_at))
 
-Rollbck to a release::
+Rollback to a release::
 
-    app.rollback("v{0}".format(release.version))
-    app.rollback("v108")
+    app.rollback(release.id)
+    app.rollback("489d7ce8-1cc3-4429-bb79-7907371d4c0e")
 
 Rename App
 ~~~~~~~~~~

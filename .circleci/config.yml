@@ -1,0 +1,190 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2.1
+executors:
+  py37:
+    docker:
+      - image: circleci/python:3.7
+  py36:
+    docker:
+      - image: circleci/python:3.6
+  py35:
+    docker:
+      - image: circleci/python:3.5
+  py34:
+    docker:
+      - image: circleci/python:3.4
+  py33:
+    docker:
+      - image: circleci/python:3.3
+  py27:
+    docker:
+      - image: circleci/python:2.7
+  # CircleCI does not offer Python 2.6 images, and neither does
+  # official Python repository. Not willing to spend time on it
+  # either... Any volunteers ?
+
+
+commands:
+  runtests:
+    description: "Runs the tests and stores the artifacts"
+    parameters:
+      interpreter:
+        type: string
+        default: "python"
+      venvmodule:
+        type: string
+        default: venv
+    steps:
+      # Restore code checkout
+      - restore_cache:
+          keys:
+            - v1-heroku3-wcpy-{{ .Revision }}
+
+      - run:
+          name: create cache key file
+          command: |
+            # Anything that defines the environment and makes it incompatible should
+            # find its way to the "circleci-cache-key.txt" file, to ensure cache is
+            # properly invalidated:
+            # - interpreter version
+            # - dependencies
+            echo << parameters.interpreter >> > "circleci-cache-key.txt"
+            cat tests-requirements.txt >> "circleci-cache-key.txt"
+            cat requirements.txt >> "circleci-cache-key.txt"
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v3-dependencies-{{ checksum "circleci-cache-key.txt" }}
+
+      - run:
+          name: install dependencies
+          command: |
+            if [ -d "${HOME}/venv" ]  # Restored from cache.
+            then
+                :
+            else
+                << parameters.interpreter >> -m << parameters.venvmodule >> ~/venv
+                . ~/venv/bin/activate
+                pip install ${PIP_EXTRA_OPTIONS} -r tests-requirements.txt
+            fi
+
+      - save_cache:
+          paths:
+            - ~/venv
+            # This is for the --user upgraded / install python packages.
+            - ~/.local/bin
+            - ~/.local/lib
+          key: v3-dependencies-{{ checksum "circleci-cache-key.txt" }}
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            . ~/venv/bin/activate
+            pytest --cov=heroku3 --cov-report=html --cov-branch
+            codecov
+
+      - store_artifacts:
+          path: coverage
+          destination: test-reports
+
+  upgrade-pip:
+    steps:
+      - run:
+          name: upgrade pip
+          command: |
+            pip install --user -U pip
+            [ -d "${HOME}/.local/bin" ] && echo "export PATH=${HOME}/.local/bin:${PATH}" >> $BASH_ENV || true
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - save_cache:
+          paths:
+            - ~/repo
+          key: v1-heroku3-wcpy-{{ .Revision }}
+
+  build37:
+    executor: py37
+    working_directory: ~/repo
+    steps:
+     - runtests:
+         interpreter: python3.7
+
+  build36:
+    executor: py36
+    working_directory: ~/repo
+    steps:
+     - runtests:
+         interpreter: python3.6
+
+  build35:
+    executor: py35
+    working_directory: ~/repo
+    steps:
+     - runtests:
+         interpreter: python3.5
+
+  build34:
+    executor: py34
+    working_directory: ~/repo
+    steps:
+     - upgrade-pip
+     - runtests:
+         interpreter: python3.4
+
+  build33:
+    executor: py33
+    working_directory: ~/repo
+    environment:
+       # required because otherwise pip tries to install backport.unittest-mock under /usr/local
+       # pip version is 10.0.1, more recent versions of pip don't behave in the same way.
+       PIP_EXTRA_OPTIONS: "--user"
+    steps:
+     - upgrade-pip
+     - runtests:
+         interpreter: python3.3
+
+  build27:
+    executor: py27
+    working_directory: ~/repo
+    steps:
+     - runtests:
+         interpreter: python2.7
+         venvmodule: virtualenv
+
+
+workflows:
+  version: 2
+  runtests:
+    jobs:
+      - build
+      - build37:
+         requires:
+           - build
+      - build36:
+         requires:
+           - build
+      - build35:
+         requires:
+           - build
+      - build34:
+         requires:
+           - build
+      - build33:
+         requires:
+           - build
+      - build27:
+         requires:
+           - build
+
+
+# vim: et:sw=2:syntax=yaml:ts=2:

@@ -16,21 +16,20 @@ if sys.argv[-1] == 'publish':
 
 required = [
     'requests>=1.2.3',
-    'simplejson==3.3.1',
-    'python-dateutil==2.6.0',
+    'python-dateutil>=2.6.0',
 ]
 
 
 setup(
     name='heroku3',
-    version='3.3.0',
+    version='3.4.1',
     description='Heroku API Wrapper.',
     long_description=open('README.rst').read() + '\n\n' +
                      open('HISTORY.rst').read(),
     author='Martin Moss',
     author_email='martin_moss@btinternet.com',
     url='https://github.com/martyzz1/heroku3.py',
-    download_url='https://github.com/martyzz1/heroku3.py/tarball/v3.3.0',
+    download_url='https://github.com/martyzz1/heroku3.py/tarball/v3.4.0',
     packages=['heroku3'],
     package_data={'': ['LICENSE', ]},
     include_package_data=True,
@@ -42,12 +41,7 @@ setup(
         'Natural Language :: English',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.0',
-        'Programming Language :: Python :: 3.1',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',

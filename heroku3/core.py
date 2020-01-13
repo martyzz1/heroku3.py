@@ -26,3 +26,10 @@ def from_key(api_key, session=None, **kwargs):
     h.authenticate(api_key)
 
     return h
+
+def test_connection (conn):
+    try:
+        conn.apps()
+        return True
+    except Exception as e:
+        return False

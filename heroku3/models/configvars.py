@@ -104,5 +104,5 @@ class ConfigVars(object):
     @classmethod
     def new_from_dict(cls, d, h=None, **kwargs):
         # Override normal operation because of crazy api.
-        c = cls(d, kwargs.pop('app'), h=h, **kwargs)
+        c = cls(d, kwargs.pop('app', None), h=h, **kwargs)
         return c

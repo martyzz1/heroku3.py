@@ -10,7 +10,7 @@ def test__url_for(heroku_core):
     url_path = url.replace(heroku_core._heroku_url, '')
 
     assert url.startswith(heroku_core._heroku_url)
-    assert url_path == '/{}'.format('/'.join(path))
+    assert url_path == '/{0}'.format('/'.join(path))
 
 
 # vim: et:sw=4:syntax=python:ts=4:

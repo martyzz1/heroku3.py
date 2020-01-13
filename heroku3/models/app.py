@@ -123,7 +123,7 @@ class App(BaseResource):
 
         return r.ok
 
-    def install_addon(self, plan_id_or_name, config=None):
+    def install_addon(self, plan_id_or_name, config=None, attachment_name=None):
 
         payload = {}
         if not config:
@@ -131,6 +131,9 @@ class App(BaseResource):
 
         payload['plan'] = plan_id_or_name
         payload['config'] = config
+
+        if attachment_name:
+            payload['attachment'] = {'name': attachment_name}
 
         r = self._h._http_resource(
             method='POST',
@@ -178,7 +181,7 @@ class App(BaseResource):
         r.raise_for_status()
         item = self._h._resource_deserialize(r.content.decode("utf-8"))
         return ConfigVars.new_from_dict(item, h=self._h, app=self)
-    
+
     def get_domain(self, hostname_or_id):
         """Get the domain for this app.."""
         r = self._h._http_resource(
@@ -186,7 +189,7 @@ class App(BaseResource):
             resource=('apps', self.name, 'domains', hostname_or_id),
         )
         r.raise_for_status()
-        
+
         item = self._h._resource_deserialize(resp.content.decode("utf-8"))
         return Domain.new_from_dict(item, h=self._h, app=self)
 
@@ -488,12 +491,12 @@ class App(BaseResource):
         """Destoys the app. Do be careful."""
         return self.delete()
 
-    def stream_log(self, dyno=None, lines=100, source=None, timeout=False):
+    def stream_log(self, dyno=None, lines=100, source=None, timeout=None):
         logger = self._logger(dyno=dyno, lines=lines, source=source, tail=True)
 
         return logger.stream(timeout=timeout)
 
-    def get_log(self, dyno=None, lines=100, source=None, timeout=False):
+    def get_log(self, dyno=None, lines=100, source=None, timeout=None):
         logger = self._logger(dyno=dyno, lines=lines, source=source, tail=0)
 
         return logger.get(timeout=timeout)
@@ -544,12 +547,11 @@ class App(BaseResource):
         )
 
     def rollback(self, release):
-        """Rolls back the release to the given version."""
+        """Rolls back the release to the given version uuid."""
         r = self._h._http_resource(
             method='POST',
             resource=('apps', self.name, 'releases'),
-            params={'rollback': release},
-            legacy=True
+            data=self._h._resource_serialize({'release': release})
         )
         r.raise_for_status()
         return self.releases()[-1]
@@ -616,7 +618,7 @@ class AppTransfer(BaseResource):
 
 
 class AppFeature(BaseResource):
-    _strs = ['name', 'description', 'doc_url', 'id']
+    _strs = ['name', 'description', 'doc_url', 'id', 'state']
     _bools = ['enabled']
     _dates = ['created_at', 'updated_at']
     _pks = ['id', 'name']

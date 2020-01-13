@@ -8,26 +8,27 @@ This module provides the basic API interface for Heroku.
 """
 
 import sys
+import json
 from pprint import pprint  # noqa
 
 import requests
 from requests.exceptions import HTTPError
 
-from .compat import json
-from .helpers import is_collection
 from .models import Plan, RateLimit
-from .models.account import Account
-from .models.account.feature import AccountFeature
-from .models.addon import Addon
+from .helpers import is_collection
 from .models.app import App
-from .models.configvars import ConfigVars
-from .models.dyno import Dyno
-from .models.invoice import Invoice
 from .models.key import Key
-from .models.logsession import LogSession
-from .models.oauth import OAuthAuthorization, OAuthClient, OAuthToken
 from .rendezvous import Rendezvous
 from .structures import KeyedListResource, SSHKeyListResource
+from .models.dyno import Dyno
+from .models.addon import Addon
+from .models.oauth import OAuthToken, OAuthClient, OAuthAuthorization
+from .models.account import Account
+from .models.invoice import Invoice
+from .models.app_setup import AppSetup
+from .models.configvars import ConfigVars
+from .models.logsession import LogSession
+from .models.account.feature import AccountFeature
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote
@@ -50,6 +51,7 @@ class MaxRangeExceeded(Exception):
 
 class HerokuCore(object):
     """The core Heroku class."""
+
     def __init__(self, session=None):
         super(HerokuCore, self).__init__()
         if session is None:
@@ -203,7 +205,7 @@ class HerokuCore(object):
             # Rate limit reached
             raise RateLimitExceeded("You have exceeded your rate limit \n{0}".format(r.content.decode("utf-8")))
 
-        if (not str(r.status_code).startswith('2')) and (not r.status_code in [304]):
+        if (not str(r.status_code).startswith('2')) and (r.status_code not in [304]):
             pass
         r.raise_for_status()
         return r
@@ -218,23 +220,31 @@ class HerokuCore(object):
 
         return obj.new_from_dict(item, h=self, **kwargs)
 
-    def _get_resources(self, resource, obj, params=None, map=None, legacy=None, order_by=None, limit=None, valrange=None, sort=None, **kwargs):
+    def _get_resources(
+            self, resource, obj, params=None, map=None, legacy=None, order_by=None, limit=None,
+            valrange=None, sort=None, **kwargs):
         """Returns a list of mapped objects from an HTTP resource."""
         if not order_by:
             order_by = obj.order_by
 
-        return self._process_items(self._get_data(resource, params=params, legacy=legacy, order_by=order_by, limit=limit, valrange=valrange, sort=sort), obj, map=map, **kwargs)
+        return self._process_items(
+            self._get_data(
+                resource, params=params, legacy=legacy, order_by=order_by, limit=limit,
+                valrange=valrange, sort=sort), obj, map=map, **kwargs)
 
     def _get_data(self, resource, params=None, legacy=None, order_by=None, limit=None, valrange=None, sort=None):
 
-        r = self._http_resource('GET', resource, params=params, legacy=legacy, order_by=order_by, limit=limit, valrange=valrange, sort=sort)
+        r = self._http_resource('GET', resource, params=params, legacy=legacy,
+                                order_by=order_by, limit=limit, valrange=valrange, sort=sort)
 
         items = self._resource_deserialize(r.content.decode("utf-8"))
         if r.status_code == 206 and 'Next-Range' in r.headers and not limit:
             # We have unexpected chunked response - deal with it
             valrange = r.headers['Next-Range']
-            print("Warning Response was chunked, Loading the next Chunk using the following next-range header returned by Heroku '{0}'. WARNING - This breaks randomly depending on your order_by name. I think it's only guarenteed to work with id's - Looks to be a Heroku problem".format(valrange))
-            new_items = self._get_data(resource, params=params, legacy=legacy, order_by=order_by, limit=limit, valrange=valrange, sort=sort)
+            print(
+                "Warning Response was chunked, Loading the next Chunk using the following next-range header returned by Heroku '{0}'. WARNING - This breaks randomly depending on your order_by name. I think it's only guarenteed to work with id's - Looks to be a Heroku problem".format(valrange)) # noqa
+            new_items = self._get_data(resource, params=params, legacy=legacy,
+                                       order_by=order_by, limit=limit, valrange=valrange, sort=sort)
             items.extend(new_items)
 
         return items
@@ -242,7 +252,8 @@ class HerokuCore(object):
     def _process_items(self, d_items, obj, map=None, **kwargs):
 
         if not isinstance(d_items, list):
-            print("Warning, Response for '{0}' was of type {1} - I was expecting a 'list'. This could mean the api has changed its response type for this request.".format(obj, type(d_items)))
+            print(
+                "Warning, Response for '{0}' was of type {1} - I was expecting a 'list'. This could mean the api has changed its response type for this request.".format(obj, type(d_items))) # noqa
             if isinstance(d_items, dict):
                 print("As it's a dict, I'll try to process it anyway")
                 return self._process_item(d_items, obj, **kwargs)
@@ -268,6 +279,33 @@ class Heroku(HerokuCore):
 
     def __repr__(self):
         return '<heroku-client at 0x%x>' % (id(self))
+
+    def create_appsetup(self, source_blob, overrides=None, app=None):
+        """
+        Creates an app-setup
+        """
+
+        assert('url' in source_blob)
+
+        payload = {'source_blob': source_blob}
+        if overrides:
+            payload.update({'overrides': overrides})
+
+        if app:
+            payload.update({'app': app})
+
+        r = self._http_resource(
+            method='POST',
+            resource=('app-setups',),
+            data=self._resource_serialize(payload)
+        )
+        r.raise_for_status()
+        item = self._resource_deserialize(r.content.decode("utf-8"))
+        pprint(item)
+        return AppSetup.new_from_dict(item, h=self)
+
+    def get_appsetup(self, app_setup_id):
+        return self._get_resource(('app-setups/{0:s}'.format(app_setup_id)), AppSetup)
 
     def account(self):
         return self._get_resource(('account'), Account)
@@ -320,10 +358,10 @@ class Heroku(HerokuCore):
             if "Name is already taken" in str(e):
                 try:
                     app = self.app(name)
-                except:
+                except:  # noqa
                     raise
                 else:
-                    print("Warning - {0:s}".format(e))
+                    print("Warning - {0:s}".format(str(e)))
             else:
                 raise
         return app
@@ -331,8 +369,8 @@ class Heroku(HerokuCore):
     def keys(self, **kwargs):
         return self._get_resources(('account/keys'), Key, map=SSHKeyListResource, **kwargs)
 
-    def invoices(self,**kwargs):
-        return self._get_resources(('account/invoices'),Invoice)
+    def invoices(self, **kwargs):
+        return self._get_resources(('account/invoices'), Invoice)
 
     def labs(self, **kwargs):
         return self.features(**kwargs)
