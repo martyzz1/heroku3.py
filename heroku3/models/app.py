@@ -471,12 +471,12 @@ class App(BaseResource):
         """Destoys the app. Do be careful."""
         return self.delete()
 
-    def stream_log(self, dyno=None, lines=100, source=None, timeout=False):
+    def stream_log(self, dyno=None, lines=100, source=None, timeout=None):
         logger = self._logger(dyno=dyno, lines=lines, source=source, tail=True)
 
         return logger.stream(timeout=timeout)
 
-    def get_log(self, dyno=None, lines=100, source=None, timeout=False):
+    def get_log(self, dyno=None, lines=100, source=None, timeout=None):
         logger = self._logger(dyno=dyno, lines=lines, source=source, tail=0)
 
         return logger.get(timeout=timeout)
