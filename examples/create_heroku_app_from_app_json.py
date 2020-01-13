@@ -60,7 +60,6 @@ def get_configuration(app_name, app_type):
         git_name = "heroku_{0}".format(app_type)
 
     overrides["env"]["DJANGO_HOSTNAME"] = "{0}{1}".format(app_name, domain)
-    overrides["env"]["DJANGO_SNAP_JWT_ADMIN_COOKIE_DOMAIN"] = domain
 
     heroku_app = heroku_conn.app(reference_app)
     config = heroku_app.config()
