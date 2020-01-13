@@ -48,6 +48,26 @@ class App(BaseResource):
             obj=Addon, app=self, **kwargs
         )
 
+    def create_build(self, url, checksum=None, version=None, buildpack_urls=None):
+        """Create a new build for this app."""
+        buildpack_urls = buildpack_urls or []
+        payload = {
+            'source_blob': {
+                'url': url,
+                'checksum': checksum,
+                'version': version,
+            },
+            'buildpacks': [{'url': u} for u in buildpack_urls],
+        }
+        r = self._h._http_resource(
+            method='POST',
+            resource=('apps', self.name, 'builds'),
+            data=self._h._resource_serialize(payload),
+        )
+        r.raise_for_status()
+        item = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return Build.new_from_dict(item, h=self._h, app=self)
+
     def builds(self, **kwargs):
         """
         Returns a list of application builds as Build objects
