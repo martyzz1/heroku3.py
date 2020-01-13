@@ -10,6 +10,8 @@
 #  you would like to copy over to your new app.   Useful for things like api keys.
 #  a "type" of app. This can be any string you want, but best to stick to your own naming conventions.
 #  'production', 'staging' 'test'  are good examples
+#
+#  YOU WILL NEED TO EDIT THIS CODE TO WORK WITH YOUR OWN PROJECTS. ITS JUST HERE TO GIVE YOU SOME POINTERS
 ######################################################################################################################
 
 
