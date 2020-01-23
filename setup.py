@@ -39,6 +39,7 @@ setup(
     version=version,
     description="Heroku API Wrapper.",
     long_description=open("README.rst").read() + "\n\n" + open("HISTORY.rst").read(),
+    long_description_content_type="text/x-rst",
     author="Martin Moss",
     author_email="martin_moss@btinternet.com",
     url="https://github.com/martyzz1/heroku3.py",
