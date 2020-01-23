@@ -137,18 +137,6 @@ jobs:
      - runtests:
          interpreter: python3.4
 
-  build33:
-    executor: py33
-    working_directory: ~/repo
-    environment:
-       # required because otherwise pip tries to install backport.unittest-mock under /usr/local
-       # pip version is 10.0.1, more recent versions of pip don't behave in the same way.
-       PIP_EXTRA_OPTIONS: "--user"
-    steps:
-     - upgrade-pip
-     - runtests:
-         interpreter: python3.3
-
   build27:
     executor: py27
     working_directory: ~/repo
