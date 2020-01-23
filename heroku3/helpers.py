@@ -9,6 +9,7 @@ This module contians the helpers.
 
 import sys
 
+# Third party libraries
 from dateutil.parser import parse as parse_datetime
 
 if sys.version_info > (3, 0):
@@ -22,7 +23,7 @@ def is_collection(obj):
       bool: whether `obj` is considered a collection (returns True) or not
           (returns False)
     """
-    col = getattr(obj, '__getitem__', False)
+    col = getattr(obj, "__getitem__", False)
     val = False if (not col) else True
 
     if isinstance(obj, basestring):
@@ -32,17 +33,9 @@ def is_collection(obj):
 
 
 # from kennethreitz/python-github3
-def to_python(obj,
-              in_dict,
-              strs=None,
-              dates=None,
-              ints=None,
-              objects=None,
-              arrays=None,
-              bools=None,
-              dicts=None,
-              **kwargs
-              ):
+def to_python(
+    obj, in_dict, strs=None, dates=None, ints=None, objects=None, arrays=None, bools=None, dicts=None, **kwargs
+):
     """Extends a given object for API Consumption.
 
     :param obj: Object to extend.

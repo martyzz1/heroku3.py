@@ -1,14 +1,15 @@
 # -*- coding: utf-8; -*-
-from __future__ import absolute_import, division, print_function
+# General libraries
+from __future__ import division, print_function, absolute_import
 
+# Third party libraries
 import pytest
 import requests
-
-from heroku3.api import Heroku, HerokuCore
+from heroku3.api import HerokuCore
 from heroku3.models.configvars import ConfigVars
 
 
-class __App():
+class __App:
     def __init__(self):
         self.name = "mock-application"
         self.id = "12345678-90ab-cdef-1234-567890abcdef"
@@ -24,6 +25,7 @@ def config_dict():
     # Because the ``unit`` package will only be added to ``sys.path`` during
     # discovery.
     from unit.models.configvars import CONFIG_VAR_KEYS, CONFIG_VAR_VALUES
+
     return dict(zip(CONFIG_VAR_KEYS, CONFIG_VAR_VALUES))
 
 
@@ -40,9 +42,11 @@ def config_vars(config_dict, app, heroku_core):
 def extra_config_dict():
     # Because the ``unit`` package will only be added to ``sys.path`` during
     # discovery.
-    from unit.models.configvars import (EXTRA_CONFIG_VAR_KEYS,
-                                        EXTRA_CONFIG_VAR_VALUES,
-                                        )
+    from unit.models.configvars import (
+        EXTRA_CONFIG_VAR_KEYS,
+        EXTRA_CONFIG_VAR_VALUES,
+    )
+
     return dict(zip(EXTRA_CONFIG_VAR_KEYS, EXTRA_CONFIG_VAR_VALUES))
 
 

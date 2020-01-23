@@ -1,11 +1,12 @@
+# Project libraries
 from . import BaseResource
 
 
 class Region(BaseResource):
-    _strs = ['description', 'id', 'name']
-    _dates = ['created_at', 'updated_at']
-    _pks = ['id', 'name']
-    order_by = 'id'
+    _strs = ["description", "id", "name"]
+    _dates = ["created_at", "updated_at"]
+    _pks = ["id", "name"]
+    order_by = "id"
 
     def __init__(self):
         self.app = None

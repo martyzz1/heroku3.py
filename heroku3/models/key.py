@@ -1,12 +1,13 @@
+# Project libraries
 from . import BaseResource
 
 
 class Key(BaseResource):
     """Heroku SSH Key."""
 
-    _strs = ['id', 'public_key', 'email', 'fingerprint', 'comment']
-    _dates = ['created_at', 'updated_at']
-    _pks = ['id']
+    _strs = ["id", "public_key", "email", "fingerprint", "comment"]
+    _dates = ["created_at", "updated_at"]
+    _pks = ["id"]
 
     def __init__(self):
         super(Key, self).__init__()
@@ -16,10 +17,7 @@ class Key(BaseResource):
 
     def delete(self):
         """Deletes the key."""
-        r = self._h._http_resource(
-            method='DELETE',
-            resource=('account', 'keys', self.id)
-        )
+        r = self._h._http_resource(method="DELETE", resource=("account", "keys", self.id))
 
         r.raise_for_status()
         return self

@@ -1,20 +1,20 @@
+# Third party libraries
 import requests
 
-from . import BaseResource, User
-from .buildpack import Buildpack
+# Project libraries
+from . import User, BaseResource
 from .slug import Slug
+from .buildpack import Buildpack
 from .sourceblob import SourceBlob
-import requests
 
 
 class Build(BaseResource):
 
-    _dates = ['created_at','updated_at']
-    _strs  = ['id', 'status', 'output_stream_url', 'stack']
-    _pks   = ['id']
-    _map   = {'slug': Slug, 'source_blob': SourceBlob, 'user' : User }
-    _arrays = { 'buildpacks' : Buildpack }
-
+    _dates = ["created_at", "updated_at"]
+    _strs = ["id", "status", "output_stream_url", "stack"]
+    _pks = ["id"]
+    _map = {"slug": Slug, "source_blob": SourceBlob, "user": User}
+    _arrays = {"buildpacks": Buildpack}
 
     def __init__(self):
         super(Build, self).__init__()

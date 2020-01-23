@@ -1,5 +1,6 @@
 # -*- coding: utf-8; -*-
-from __future__ import absolute_import, division, print_function
+# General libraries
+from __future__ import division, print_function, absolute_import
 
 
 def test_to_dict(config_vars, config_dict):

@@ -15,13 +15,14 @@ heroku3.py
 
 # Meta.
 
-__title__ = 'heroku3'
-__author__ = 'Heroku'
-__copyright__ = 'Copyright 2013 Heroku'
-__license__ = 'MIT'
+__title__ = "heroku3"
+__author__ = "Heroku"
+__copyright__ = "Copyright 2013 Heroku"
+__license__ = "MIT"
 
-__version__ = '3.5.1'
+__version__ = "3.5.1"
 
 # Module namespace.
 
+# Project libraries
 from .core import from_key  # noqa

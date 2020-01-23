@@ -21,6 +21,7 @@ import time
 import itertools
 from pprint import pprint
 
+# Third party libraries
 import heroku3
 from requests.exceptions import Timeout, ConnectionError
 
@@ -56,9 +57,7 @@ def get_configuration(app_name, app_type):
         reference_app = "{0}reference-app".format(app_type)
         app["name"] = "{0}example-{1}".format(app_type, app_name)
         overrides["env"]["DJANGO_CONFIGURATION"] = app_type.capitalize()
-        overrides["env"]["DJANGO_SETTINGS_MODULE"] = "config.settings.{0}".format(
-            app_type
-        )
+        overrides["env"]["DJANGO_SETTINGS_MODULE"] = "config.settings.{0}".format(app_type)
         git_name = "heroku_{0}".format(app_type)
 
     overrides["env"]["DJANGO_HOSTNAME"] = "{0}{1}".format(app_name, domain)
@@ -70,9 +69,7 @@ def get_configuration(app_name, app_type):
         if config[k]:
             overrides["env"][k] = config[k]
 
-    source_blob[
-        "url"
-    ] = "https://api.github.com/repos/example/{0}/tarball/master?access_token={1}".format(
+    source_blob["url"] = "https://api.github.com/repos/example/{0}/tarball/master?access_token={1}".format(
         app_name, GITHUB_TOKEN
     )
 
@@ -159,9 +156,7 @@ if __name__ == "__main__":
         next(spinner)
         print("{0}\r".format(next(spinner)), end="\r")
 
-        success, time_checkpoint = wait_for_status_event(
-            heroku_appsetup.id, time_checkpoint
-        )
+        success, time_checkpoint = wait_for_status_event(heroku_appsetup.id, time_checkpoint)
         if success:
             break
 

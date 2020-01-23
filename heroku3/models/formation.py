@@ -1,20 +1,21 @@
 import sys
 
+# Project libraries
 from . import BaseResource
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote
 else:
-    from urllib import quote # noqa
+    from urllib import quote  # noqa
 
 
 class Formation(BaseResource):
 
-    _strs = ['id', 'command', 'type', 'size']
-    _ints = ['quantity']
-    _bools = ['attached']
-    _dates = ['created_at', 'updated_at']
-    _pks = ['id', 'type']
+    _strs = ["id", "command", "type", "size"]
+    _ints = ["quantity"]
+    _bools = ["attached"]
+    _dates = ["created_at", "updated_at"]
+    _pks = ["id", "type"]
 
     def __init__(self):
         self.app = None
@@ -33,18 +34,18 @@ class Formation(BaseResource):
 
     def update(self, size=None, quantity=None):
 
-        assert(size or quantity == 0 or quantity)
+        assert size or quantity == 0 or quantity
         payload = {}
         if size:
-            payload['size'] = size
+            payload["size"] = size
 
         if quantity or quantity == 0:
-            payload['quantity'] = quantity
+            payload["quantity"] = quantity
 
         r = self._h._http_resource(
-            method='PATCH',
-            resource=('apps', self.app.id, 'formation', quote(self.type)),
-            data=self._h._resource_serialize(payload)
+            method="PATCH",
+            resource=("apps", self.app.id, "formation", quote(self.type)),
+            data=self._h._resource_serialize(payload),
         )
 
         r.raise_for_status()

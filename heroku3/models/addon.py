@@ -1,23 +1,21 @@
-from . import BaseResource, Plan
+# Project libraries
+from . import Plan, BaseResource
 
 
 class Addon(BaseResource):
     """Heroku Addon."""
 
-    _strs = ['id', 'config', 'name', 'provider_id', 'web_url']
-    _pks = ['id', 'name']
-    _map = {'plan': Plan}
-    _dates = ['created_at', 'updated_at']
+    _strs = ["id", "config", "name", "provider_id", "web_url"]
+    _pks = ["id", "name"]
+    _map = {"plan": Plan}
+    _dates = ["created_at", "updated_at"]
 
     def __repr__(self):
         return "<addon '{0}'>".format(self.plan.name)
 
     def delete(self):
         """Uninstalls the addon"""
-        r = self._h._http_resource(
-            method='DELETE',
-            resource=('apps', self.app.id, 'addons', self.id)
-        )
+        r = self._h._http_resource(method="DELETE", resource=("apps", self.app.id, "addons", self.id))
         r.raise_for_status()
         return r.ok
 
@@ -25,12 +23,12 @@ class Addon(BaseResource):
 
         """Upgrades an addon to the given plan."""
 
-        payload = {'plan': plan_id_or_name}
+        payload = {"plan": plan_id_or_name}
 
         r = self._h._http_resource(
-            method='PATCH',
-            resource=('apps', self.app.id, 'addons', self.id),
-            data=self._h._resource_serialize(payload)
+            method="PATCH",
+            resource=("apps", self.app.id, "addons", self.id),
+            data=self._h._resource_serialize(payload),
         )
 
         r.raise_for_status()

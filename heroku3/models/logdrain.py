@@ -1,12 +1,13 @@
+# Project libraries
 from . import BaseResource
 from .addon import Addon
 
 
 class LogDrain(BaseResource):
-    _strs = ['id', 'url', 'token']
-    _map = {'addon': Addon}
-    _dates = ['created_at', 'updated_at']
-    _pks = ['id']
+    _strs = ["id", "url", "token"]
+    _map = {"addon": Addon}
+    _dates = ["created_at", "updated_at"]
+    _pks = ["id"]
 
     def __init__(self):
         self.app = None
@@ -16,10 +17,7 @@ class LogDrain(BaseResource):
         return "<logdrain '{0}'>".format(self.id)
 
     def remove(self):
-        r = self._h._http_resource(
-            method='DELETE',
-            resource=('apps', self.app.id, 'log-drains', self.id)
-        )
+        r = self._h._http_resource(method="DELETE", resource=("apps", self.app.id, "log-drains", self.id))
 
         r.raise_for_status()
 

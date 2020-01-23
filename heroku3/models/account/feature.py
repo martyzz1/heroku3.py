@@ -1,11 +1,12 @@
+# Project libraries
 from .. import BaseResource
 
 
 class AccountFeature(BaseResource):
-    _strs = ['name', 'description', 'doc_url', 'id']
-    _bools = ['enabled']
-    _dates = ['created_at', 'updated_at']
-    _pks = ['id', 'name']
+    _strs = ["name", "description", "doc_url", "id"]
+    _bools = ["enabled"]
+    _dates = ["created_at", "updated_at"]
+    _pks = ["id", "name"]
 
     def __init__(self):
         self.app = None
@@ -16,9 +17,9 @@ class AccountFeature(BaseResource):
 
     def update(self, enabled):
         r = self._h._http_resource(
-            method='POST',
-            resource=('account', 'features', self.id),
-            data=self._h._resource_serialize({'enabled': enabled})
+            method="POST",
+            resource=("account", "features", self.id),
+            data=self._h._resource_serialize({"enabled": enabled}),
         )
         r.raise_for_status()
         return r.ok

@@ -1,11 +1,14 @@
 # -*- coding: utf-8; -*-
-from __future__ import absolute_import, division, print_function
+# General libraries
+from __future__ import division, print_function, absolute_import
+
+# Third party libraries
+from heroku3.models.configvars import ConfigVars
+
 try:
     from itertools import chain, izip_longest as zip_longest
 except ImportError:
     from itertools import chain, zip_longest  # noqa
-
-from heroku3.models.configvars import ConfigVars
 
 
 def test_new_from_dict(config_dict, app):

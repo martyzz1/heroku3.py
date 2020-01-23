@@ -7,8 +7,10 @@ heroku3.core
 This module provides the base entrypoint for heroku3.py.
 """
 
+# Third party libraries
 import requests
 
+# Project libraries
 from .api import Heroku
 
 
@@ -27,9 +29,10 @@ def from_key(api_key, session=None, **kwargs):
 
     return h
 
-def test_connection (conn):
+
+def test_connection(conn):
     try:
         conn.apps()
         return True
-    except Exception as e:
+    except Exception:
         return False
