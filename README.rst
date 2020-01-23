@@ -21,7 +21,7 @@ other aspects related to Heroku. It allows you to easily utilize the Heroku
 platform from your applications.
 
 Introduction
-===========
+============
 
 First instantiate a heroku_conn as above::
 
@@ -54,7 +54,6 @@ Get the unique ID of the last request sent to heroku to give them for debugging:
 
     id = heroku_conn.last_request_id
 
-
 General notes about list Objects
 --------------------------------
 
@@ -84,7 +83,6 @@ List the last 10 releases::
 
     app.releases(order_by='version', limit=10, sort='desc')
     heroku_conn.apps()['empty-spring-4049'].releases(order_by='version', limit=10, sort='desc')
-
 
 List objects can be referred to directly by *any* of their primary keys too::
 
@@ -145,7 +143,6 @@ Legacy API Calls
 
 The API has been built with an internal legacy=True ability, so any functionlity not implemented in the new API can be called via the previous `legacy API <https://legacy-api-docs.herokuapp.com/>`_. This is currently only used for *rollbacks*.
 
-
 Object API
 ==========
 
@@ -161,7 +158,7 @@ Change Password::
     account.change_password("<current_password>", "<new_password>")
 
 SSH Keys
-~~~~
+~~~~~~~~
 
 List all configured keys::
 
@@ -193,7 +190,7 @@ Enable a feature::
     feature.enable()
 
 Plans - or Addon Services
---------------
+-------------------------
 
 List all available Addon Services::
 
@@ -264,9 +261,8 @@ Update all buildpacks::
 
 *N.B. buildpack_urls can also be empty. This clears all buildpacks.*
 
-
 App Labs/Features
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 List all features::
 
@@ -306,7 +302,6 @@ Update a Transfer's state::
     transfer.update("Pending")
     transfer.update("Declined")
     transfer.update("Accepted")
-
 
 Collaborators
 ~~~~~~~~~~~~~
@@ -428,7 +423,7 @@ Run a command and attach to it, returning the commands output as a string::
     print output
 
 Formations
-_________
+__________
 
 Formations represent the dynos that you have configured in your Procfile - whether they are running or not.
 Use Formations to scale dynos up and down
@@ -452,7 +447,6 @@ Resize your Procfile Processes::
     app.process_formation()['web'].resize(1) # for 1X
     proc = app.resize_formation_process(<formation_id_or_name>, <size>)
 
-
 Log Drains
 ~~~~~~~~~~
 
@@ -469,8 +463,6 @@ Remove a logdrain::
 
     delete_logdrain - app.remove_logdrain(<id_or_url>)
 
-
-
 Log Sessions
 ~~~~~~~~~~~~
 
@@ -482,7 +474,6 @@ Access the logs::
     print(app.get_log(dyno='web.1', lines=2, source='app'))
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from down to created
     2011-12-21T22:53:47+00:00 heroku[web.1]: State changed from created to starting
-
 
 You can even stream the tail::
 
@@ -596,7 +587,6 @@ Logging
 
 Note: logging is now achieved by the following method::
 
-
     import httplib
     httplib.HTTPConnection.debuglevel = 1
 
@@ -627,8 +617,6 @@ Note: logging is now achieved by the following method::
     >>>header: Content-Length: 44
     >>>header: Connection: keep-alive
 
-
-
 Installation
 ------------
 
@@ -641,7 +629,6 @@ Or, if you absolutely must::
     $ easy_install heroku3
 
 But, you `really shouldn't do that <http://www.pip-installer.org/en/latest/other-tools.html#pip-compared-to-easy-install>`_.
-
 
 License
 -------
