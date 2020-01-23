@@ -16,16 +16,12 @@ executors:
   py34:
     docker:
       - image: circleci/python:3.4
-  py33:
-    docker:
-      - image: circleci/python:3.3
   py27:
     docker:
       - image: circleci/python:2.7
   # CircleCI does not offer Python 2.6 images, and neither does
   # official Python repository. Not willing to spend time on it
   # either... Any volunteers ?
-
 
 commands:
   runtests:
@@ -161,7 +157,6 @@ jobs:
          interpreter: python2.7
          venvmodule: virtualenv
 
-
 workflows:
   version: 2
   runtests:
@@ -185,6 +180,5 @@ workflows:
       - build27:
          requires:
            - build
-
 
 # vim: et:sw=2:syntax=yaml:ts=2:
