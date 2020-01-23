@@ -13,9 +13,6 @@ executors:
   py35:
     docker:
       - image: circleci/python:3.5
-  py34:
-    docker:
-      - image: circleci/python:3.4
   py27:
     docker:
       - image: circleci/python:2.7
@@ -129,14 +126,6 @@ jobs:
      - runtests:
          interpreter: python3.5
 
-  build34:
-    executor: py34
-    working_directory: ~/repo
-    steps:
-     - upgrade-pip
-     - runtests:
-         interpreter: python3.4
-
   build27:
     executor: py27
     working_directory: ~/repo
@@ -157,9 +146,6 @@ workflows:
          requires:
            - build
       - build35:
-         requires:
-           - build
-      - build34:
          requires:
            - build
       - build27:
