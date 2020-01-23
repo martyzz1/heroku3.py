@@ -162,9 +162,6 @@ workflows:
       - build34:
          requires:
            - build
-      - build33:
-         requires:
-           - build
       - build27:
          requires:
            - build
