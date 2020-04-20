@@ -8,6 +8,7 @@ from heroku3.models.slug import Slug
 from .dyno import Dyno
 from .addon import Addon
 from .build import Build
+from .buildpack_installation import BuildpackInstallation
 from .domain import Domain
 from .region import Region
 from ..models import User, Stack, BaseResource, Organization
@@ -483,6 +484,11 @@ class App(BaseResource):
         )
         r.raise_for_status()
         return r.ok
+
+    def buildpacks(self, **kwargs):
+        """Get installed buildpacks for this app"""
+        return self._h._get_resources(resource=("apps", self.id, "buildpack-installations"),
+                                      obj=BuildpackInstallation, app=self, **kwargs)
 
     def slug(self, slug_id):
         """Get a slug by id."""

@@ -1,11 +1,12 @@
 # Project libraries
-from . import BuildPack, BaseResource  # noqa
+from . import BaseResource
+from .buildpack import Buildpack
 
 
 class BuildpackInstallation(BaseResource):
     """Heroku Buildpack Insallation."""
 
-    _map = {"buildpack": Buildpack}  # noqa
+    _map = {"buildpack": Buildpack}
     _ints = ["ordinal"]
     _pks = ["ordinal"]
 
