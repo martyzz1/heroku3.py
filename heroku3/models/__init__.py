@@ -7,14 +7,16 @@ heroku3.models
 This module contains the models that comprise the Heroku API.
 """
 
-from ..helpers import to_python
-from pprint import pprint # noqa
 import sys
+from pprint import pprint  # noqa
+
+# Project libraries
+from ..helpers import to_python
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote
 else:
-    from urllib import quote # noqa
+    from urllib import quote  # noqa
 
 
 class BaseResource(object):
@@ -27,7 +29,7 @@ class BaseResource(object):
     _map = {}
     _pks = []
     _strs = []
-    order_by = 'id'
+    order_by = "id"
 
     def __init__(self):
         self._bootstrap()
@@ -51,14 +53,15 @@ class BaseResource(object):
         """
         # self._pks is (should be, don't see where this is enforeced) a subset
         # of the set below, hence there is no need to include it.
-        return (list(cls._arrays.keys()) +
-                cls._bools +
-                cls._dates +
-                cls._dicts +
-                cls._ints +
-                list(cls._map.keys()) +
-                cls._strs
-                )
+        return (
+            list(cls._arrays.keys())
+            + cls._bools
+            + cls._dates
+            + cls._dicts
+            + cls._ints
+            + list(cls._map.keys())
+            + cls._strs
+        )
 
     @property
     def _id(self):
@@ -94,17 +97,18 @@ class BaseResource(object):
     @classmethod
     def new_from_dict(cls, d, h=None, **kwargs):
 
-        d = to_python(obj=cls(),
-                      in_dict=d,
-                      strs=cls._strs,
-                      ints=cls._ints,
-                      dates=cls._dates,
-                      bools=cls._bools,
-                      dicts=cls._dicts,
-                      objects=cls._map,
-                      arrays=cls._arrays,
-                      _h=h,
-                      )
+        d = to_python(
+            obj=cls(),
+            in_dict=d,
+            strs=cls._strs,
+            ints=cls._ints,
+            dates=cls._dates,
+            bools=cls._bools,
+            dicts=cls._dicts,
+            objects=cls._map,
+            arrays=cls._arrays,
+            _h=h,
+        )
 
         d.__dict__.update(kwargs)
 
@@ -114,8 +118,8 @@ class BaseResource(object):
 class Price(BaseResource):
     """Heroku Price."""
 
-    _strs = ['cents', 'unit']
-    _pks = ['cents']
+    _strs = ["cents", "unit"]
+    _pks = ["cents"]
 
     def __init__(self):
         self.app = None
@@ -128,10 +132,10 @@ class Price(BaseResource):
 class Plan(BaseResource):
     """Heroku Addon."""
 
-    _strs = ['id', 'name', 'description', 'state']
-    _pks = ['name', 'id']
-    _map = {'price': Price}
-    _dates = ['created_at', 'updated_at']
+    _strs = ["id", "name", "description", "state"]
+    _pks = ["name", "id"]
+    _map = {"price": Price}
+    _dates = ["created_at", "updated_at"]
 
     def __repr__(self):
         return "<Plan '{0}'>".format(self.name)
@@ -140,8 +144,8 @@ class Plan(BaseResource):
 class Stack(BaseResource):
     """Heroku Stack."""
 
-    _strs = ['id', 'name']
-    _pks = ['id', 'name']
+    _strs = ["id", "name"]
+    _pks = ["id", "name"]
 
     def __init__(self):
         self.app = None
@@ -154,8 +158,8 @@ class Stack(BaseResource):
 class User(BaseResource):
     """Heroku User."""
 
-    _strs = ['id', 'email']
-    _pks = ['id', 'email']
+    _strs = ["id", "email"]
+    _pks = ["id", "email"]
 
     def __init__(self):
         self.app = None
@@ -164,11 +168,12 @@ class User(BaseResource):
     def __repr__(self):
         return "<user '{0}'>".format(self.email)
 
+
 class Organization(BaseResource):
     """Heroku Organization."""
 
-    _strs = ['id', 'name']
-    _pks = ['id', 'name']
+    _strs = ["id", "name"]
+    _pks = ["id", "name"]
 
     def __init__(self):
         self.app = None
@@ -178,24 +183,25 @@ class Organization(BaseResource):
         return "<organization '{0}'>".format(self.name)
 
 
-#class Plan(BaseResource):
-    #"""Heroku Addon."""
+# class Plan(BaseResource):
+# """Heroku Addon."""
 #
-    #_strs = ['id', 'name']
-    #_pks = ['id', 'name']
+# _strs = ['id', 'name']
+# _pks = ['id', 'name']
 #
-    #def __init__(self):
-        #self.app = None
-        #super(Plan, self).__init__()
+# def __init__(self):
+# self.app = None
+# super(Plan, self).__init__()
 
-    #def __repr__(self):
-        #return "<plan '{0} {1}'>".format(self.id, self.name)
+# def __repr__(self):
+# return "<plan '{0} {1}'>".format(self.id, self.name)
 #
+
 
 class RateLimit(BaseResource):
-    _strs = ['remaining']
+    _strs = ["remaining"]
     _bools = []
-    _pks = ['remaining']
+    _pks = ["remaining"]
 
     def __init__(self):
         self.app = None

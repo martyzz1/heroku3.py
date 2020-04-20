@@ -1,24 +1,26 @@
 import os
+import ssl
 import select
 import socket
-import ssl
 
-#from pprint import pprint
+# Third party libraries
 from six.moves.urllib.parse import urlparse, uses_netloc
 
-uses_netloc.append('rendezvous')
+uses_netloc.append("rendezvous")
 
 
 class InvalidResponseFromRendezVous(Exception):
     pass
 
-
+  
 class Rendezvous():
-    def __init__(self, url, printout=False, timeout_secs=20):
+    def __init__(self, url, printout=False, timeout_secs=29):
         self.url = url
         urlp = urlparse(url)
         self.hostname = urlp.hostname
         self.port = urlp.port
+        if not self.port:
+            self.port = 443
         self.secret = urlp.path[1:]
         path = os.path.dirname(os.path.realpath(__file__))
         self.cert = os.path.abspath("{0}/data/cacert.pem".format(path))
@@ -33,23 +35,35 @@ class Rendezvous():
         # Require a certificate from the server. We used a self-signed certificate
         # so here ca_certs must be the server certificate itself.
 
-        ssl_sock = ssl.wrap_socket(s,
-                            ca_certs=self.cert,
-                            cert_reqs=ssl.CERT_REQUIRED,
-                            ssl_version=ssl.PROTOCOL_TLSv1)
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+        context.verify_mode = ssl.CERT_REQUIRED
+        context.check_hostname = True
+        context.load_verify_locations(self.cert)
+        ssl_sock = context.wrap_socket(s, server_hostname=self.hostname)
+
+        # ssl_sock = ssl.wrap_socket(
+        #    #s,
+        #    #ca_certs=self.cert,
+        #    #cert_reqs=ssl.CERT_REQUIRED,
+        #    #ssl_version=ssl.PROTOCOL_TLSv1_1
+        # )
 
         ssl_sock.settimeout(self.timeout_secs)
+
         ssl_sock.connect((self.hostname, self.port))
-        ssl_sock.write(self.secret.encode('utf8'))
-        data = ssl_sock.read().decode('utf8')
+        # ssl_sock.setblocking(1)
+        ssl_sock.write(self.secret.encode("utf8"))
+        data = ssl_sock.read().decode("utf8")
         if not data.startswith("rendezvous"):
-            raise InvalidResponseFromRendezVous("The Response from the rendezvous server wasn't as expected. Response was - {0}".format(data))
+            raise InvalidResponseFromRendezVous(
+                "The Response from the rendezvous server wasn't as expected. Response was - {0}".format(data)
+            )
         while True:
             r, w, e = select.select([ssl_sock], [], [])
             if ssl_sock in r:
                 try:
-                    data = ssl_sock.recv(1024).decode('utf8')
-                except ssl.SSLError as e:
+                    data = ssl_sock.recv(1024).decode("utf8")
+                except ssl.SSLError:
                     # Ignore the SSL equivalent of EWOULDBLOCK, but re-raise other errors
                     if e.errno != ssl.SSL_ERROR_WANT_READ:
                         raise e
@@ -58,6 +72,6 @@ class Rendezvous():
                 if not data:
                     break
                 if self.printout:
-                    print(data.rstrip('\n'))
+                    print(data.rstrip("\n"))
                 self.data += data
         return self.data

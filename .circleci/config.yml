@@ -13,19 +13,12 @@ executors:
   py35:
     docker:
       - image: circleci/python:3.5
-  py34:
-    docker:
-      - image: circleci/python:3.4
-  py33:
-    docker:
-      - image: circleci/python:3.3
   py27:
     docker:
       - image: circleci/python:2.7
   # CircleCI does not offer Python 2.6 images, and neither does
   # official Python repository. Not willing to spend time on it
   # either... Any volunteers ?
-
 
 commands:
   runtests:
@@ -85,7 +78,8 @@ commands:
           name: run tests
           command: |
             . ~/venv/bin/activate
-            pytest --cov=heroku3 --cov-report=html
+            pytest --cov=heroku3 --cov-report=html --cov-branch
+            codecov
 
       - store_artifacts:
           path: coverage
@@ -132,26 +126,6 @@ jobs:
      - runtests:
          interpreter: python3.5
 
-  build34:
-    executor: py34
-    working_directory: ~/repo
-    steps:
-     - upgrade-pip
-     - runtests:
-         interpreter: python3.4
-
-  build33:
-    executor: py33
-    working_directory: ~/repo
-    environment:
-       # required because otherwise pip tries to install backport.unittest-mock under /usr/local
-       # pip version is 10.0.1, more recent versions of pip don't behave in the same way.
-       PIP_EXTRA_OPTIONS: "--user"
-    steps:
-     - upgrade-pip
-     - runtests:
-         interpreter: python3.3
-
   build27:
     executor: py27
     working_directory: ~/repo
@@ -159,7 +133,6 @@ jobs:
      - runtests:
          interpreter: python2.7
          venvmodule: virtualenv
-
 
 workflows:
   version: 2
@@ -175,15 +148,8 @@ workflows:
       - build35:
          requires:
            - build
-      - build34:
-         requires:
-           - build
-      - build33:
-         requires:
-           - build
       - build27:
          requires:
            - build
-
 
 # vim: et:sw=2:syntax=yaml:ts=2:

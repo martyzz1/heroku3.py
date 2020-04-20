@@ -1,10 +1,11 @@
+# Project libraries
 from . import BaseResource
 
 
 class Buildpack(BaseResource):
 
-    _strs = [ 'url' ]
-    _pks  = [ 'url' ]
+    _strs = ["url"]
+    _pks = ["url"]
 
     def __init__(self):
         super(Buildpack, self).__init__()

@@ -54,15 +54,11 @@ class ConfigVars(object):
 
     @property
     def _resource(self):
-        return 'apps', self.__app.name, 'config-vars'
+        return "apps", self.__app.name, "config-vars"
 
     def __patch_config(self, config):
         payload = self._h._resource_serialize(config)
-        r = self._h._http_resource(
-            method='PATCH',
-            resource=self._resource,
-            data=payload
-        )
+        r = self._h._http_resource(method="PATCH", resource=self._resource, data=payload)
         r.raise_for_status()
         return self._h._resource_deserialize(r.content.decode("utf-8"))
 
@@ -104,5 +100,5 @@ class ConfigVars(object):
     @classmethod
     def new_from_dict(cls, d, h=None, **kwargs):
         # Override normal operation because of crazy api.
-        c = cls(d, kwargs.pop('app', None), h=h, **kwargs)
+        c = cls(d, kwargs.pop("app", None), h=h, **kwargs)
         return c

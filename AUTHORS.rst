@@ -7,7 +7,7 @@ Development Lead
 - Martin Moss <martin_moss@btinternet.com>
 
 Based upon the original heroku.py by
-```````````````````````
+````````````````````````````````````
 - Kenneth Reitz <me@kennethreitz.com>
 - johtso <johtso@gmail.com>
 - skoczen <skoczen@gmail.com>

@@ -1,7 +1,9 @@
 # -*- coding: utf-8; -*-
-from __future__ import absolute_import, division, print_function
+# General libraries
+from __future__ import division, print_function, absolute_import
 import copy
 
+# Third party libraries
 import pytest
 import responses
 
@@ -13,11 +15,9 @@ def test__delitem__when_key_exists(config_vars, config_dict):
     final_config = copy.copy(config_dict)
     del final_config[key]
 
-    responses.add(responses.PATCH,
-                  config_vars._h._url_for(*config_vars._resource),
-                  status=200,
-                  json=final_config,
-                  )
+    responses.add(
+        responses.PATCH, config_vars._h._url_for(*config_vars._resource), status=200, json=final_config,
+    )
 
     del config_vars[key]
 
@@ -31,11 +31,9 @@ def test__delitem__when_key_not_removed(config_vars, config_dict):
     key = list(config_dict.keys())[0]
     original_config = config_vars._ConfigVars__data
 
-    responses.add(responses.PATCH,
-                  config_vars._h._url_for(*config_vars._resource),
-                  status=200,
-                  json=config_dict,
-                  )
+    responses.add(
+        responses.PATCH, config_vars._h._url_for(*config_vars._resource), status=200, json=config_dict,
+    )
 
     with pytest.raises(AssertionError):
         del config_vars[key]

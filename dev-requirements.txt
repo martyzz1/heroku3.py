@@ -1,10 +1,10 @@
+-r tests-requirements.txt
 autopep8
 flake8
-ipdb
 importmagic
+ipdb
 jedi
 rope
-yapf
-wheel
 twine
--r tests-requirements.txt
+wheel
+yapf

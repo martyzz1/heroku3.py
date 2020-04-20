@@ -68,7 +68,7 @@ class KeyedListResource(object):
             return o.new(*args, **kwargs)
 
     def remove(self, key):
-        if hasattr(self[0], 'delete'):
+        if hasattr(self[0], "delete"):
             return self[key].delete()
 
     def get(self, key):
@@ -134,4 +134,4 @@ class FilteredListResource(KeyedListResource):
 
 
 def filtered_key_list_resource_factory(filter_func):
-    return type('FilteredListResource', (FilteredListResource,), {'filter_func': staticmethod(filter_func)})
+    return type("FilteredListResource", (FilteredListResource,), {"filter_func": staticmethod(filter_func)})

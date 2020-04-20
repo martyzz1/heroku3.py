@@ -1,14 +1,16 @@
+# Third party libraries
 import requests
 
+# Project libraries
 from . import BaseResource
 
 
 class LogSession(BaseResource):
-    _strs = ['id', 'logplex_url', 'dyno', 'source']
-    _ints = ['lines']
-    _bools = ['tail']
-    _dates = ['created_at', 'updated_at']
-    _pks = ['id']
+    _strs = ["id", "logplex_url", "dyno", "source"]
+    _ints = ["lines"]
+    _bools = ["tail"]
+    _dates = ["created_at", "updated_at"]
+    _pks = ["id"]
 
     def __init__(self):
         self.app = None
