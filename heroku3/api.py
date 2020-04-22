@@ -479,7 +479,8 @@ class Heroku(HerokuCore):
         item = self._resource_deserialize(r.content.decode("utf-8"))
         return OAuthToken.new_from_dict(item, h=self)
 
-    def run_command_on_app(self, appname, command, size=1, attach=True, printout=True, env=None):
+    def run_command_on_app(self, appname, command, size='standard-1x', attach=True, printout=True, env=None,
+                           timeout_secs=60):
         """Run a remote command attach=True if you want to capture the output"""
         if attach:
             attach = True
@@ -497,7 +498,7 @@ class Heroku(HerokuCore):
         dyno = Dyno.new_from_dict(item, h=self)
 
         if attach:
-            output = Rendezvous(dyno.attach_url, printout).start()
+            output = Rendezvous(dyno.attach_url, printout=printout, timeout_secs=timeout_secs).start()
             return output, dyno
         else:
             return dyno

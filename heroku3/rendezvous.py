@@ -12,9 +12,9 @@ uses_netloc.append("rendezvous")
 class InvalidResponseFromRendezVous(Exception):
     pass
 
-
-class Rendezvous:
-    def __init__(self, url, printout=False):
+  
+class Rendezvous():
+    def __init__(self, url, printout=False, timeout_secs=29):
         self.url = url
         urlp = urlparse(url)
         self.hostname = urlp.hostname
@@ -26,6 +26,7 @@ class Rendezvous:
         self.cert = os.path.abspath("{0}/data/cacert.pem".format(path))
         self.data = ""
         self.printout = printout
+        self.timeout_secs = timeout_secs
 
     def start(self):
 
@@ -47,7 +48,8 @@ class Rendezvous:
         #    #ssl_version=ssl.PROTOCOL_TLSv1_1
         # )
 
-        ssl_sock.settimeout(30)
+        ssl_sock.settimeout(self.timeout_secs)
+
         ssl_sock.connect((self.hostname, self.port))
         # ssl_sock.setblocking(1)
         ssl_sock.write(self.secret.encode("utf8"))
