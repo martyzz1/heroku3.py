@@ -154,6 +154,16 @@ class Stack(BaseResource):
     def __repr__(self):
         return "<stack '{0}'>".format(self.name)
 
+class SNI(BaseResource):
+    """Heroku SNI."""
+
+    _strs = ["id", "name", "certificate_chain", "cname"]
+    _pks = ["name", "id"]
+    _dates = ["created_at", "updated_at"]
+
+    def __repr__(self):
+        return "<SNI '{0}'>".format(self.name)
+
 
 class User(BaseResource):
     """Heroku User."""

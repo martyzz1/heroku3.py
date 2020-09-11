@@ -11,7 +11,7 @@ from .build import Build
 from .buildpack_installation import BuildpackInstallation
 from .domain import Domain
 from .region import Region
-from ..models import User, Stack, BaseResource, Organization
+from ..models import User, Stack, BaseResource, Organization, SNI
 from .release import Release
 from .logdrain import LogDrain
 from .formation import Formation
@@ -133,6 +133,33 @@ class App(BaseResource):
         r.raise_for_status()
         item = self._h._resource_deserialize(r.content.decode("utf-8"))
         return Addon.new_from_dict(item, h=self._h, app=self)
+
+
+    def add_sni(self, certificate_chain, private_key):
+        payload = { 'certificate_chain': certificate_chain, 'private_key': private_key }
+
+        r = self._h._http_resource(method="POST", resource=("apps", self.name, "sni-endpoints"), data=self._h._resource_serialize(payload))
+
+        r.raise_for_status()
+        item = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return SNI.new_from_dict(item, h=self._h, app=self)
+
+
+    def remove_sni(self, sni_id_or_name):
+        r = self._h._http_resource(method="DELETE", resource=("apps", self.name, "sni-endpoints", sni_id_or_name))
+
+        r.raise_for_status()
+        item = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return SNI.new_from_dict(item, h=self._h, app=self)
+
+
+    def get_sni(self, sni_id_or_name):
+        r = self._h._http_resource(method="GET", resource=("apps", self.id, "sni-endpoint", sni_id_or_name))
+
+        r.raise_for_status()
+        item = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return SNI.new_from_dict(item, h=self._h, app=self)
+
 
     def collaborators(self, **kwargs):
         """The collaborators for this app."""
