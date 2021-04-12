@@ -351,7 +351,7 @@ class App(BaseResource):
         assert obj["name"] == "boot_timeout"
         return obj["value"]
 
-    def set_boot_timeout(self, value: int):
+    def set_boot_timeout(self, value):
         r = self._h._http_resource(
             method="PUT",
             resource=("apps", self.id, "limits", "boot_timeout"),
