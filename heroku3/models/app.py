@@ -356,14 +356,16 @@ class App(BaseResource):
             resource=("apps", self.id, "limits", "boot_timeout"),
             data=self._h._resource_serialize({"value": value})
         )
-        return r.status_code
+        r.raise_for_status()
+        return r.ok
 
     def remove_boot_timeout(self):
         r = self._h._http_resource(
             method="DELETE",
             resource=("apps", self.id, "limits", "boot_timeout")
         )
-        return r.status_code
+        r.raise_for_status()
+        return r.ok
 
     @property
     def info(self):
