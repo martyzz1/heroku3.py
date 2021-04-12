@@ -359,7 +359,7 @@ class App(BaseResource):
         )
         return r.status_code
 
-    def del_boot_timeout(self):
+    def remove_boot_timeout(self):
         r = self._h._http_resource(
             method="DELETE",
             resource=("apps", self.id, "limits", "boot_timeout")
