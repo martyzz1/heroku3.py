@@ -4,7 +4,7 @@
 heroku3.helpers
 ~~~~~~~~~~~~~~
 
-This module contians the helpers.
+This module contains the helpers.
 """
 
 import sys
