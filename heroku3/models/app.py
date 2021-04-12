@@ -1,4 +1,3 @@
-import json
 import sys
 from pprint import pprint  # NOQA
 
@@ -355,7 +354,7 @@ class App(BaseResource):
         r = self._h._http_resource(
             method="PUT",
             resource=("apps", self.id, "limits", "boot_timeout"),
-            data=json.dumps({"value": value})
+            data=self._h._resource_serialize({"value": value})
         )
         return r.status_code
 
