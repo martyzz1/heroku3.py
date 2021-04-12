@@ -1,8 +1,11 @@
+import json
 import sys
 from pprint import pprint  # NOQA
 
 # Third party libraries
 from heroku3.models.slug import Slug
+from requests.exceptions import HTTPError
+from requests import codes as http_codes
 
 # Project libraries
 from .dyno import Dyno
@@ -331,6 +334,37 @@ class App(BaseResource):
 
         r.raise_for_status()
         return self._h._process_items(self._h._resource_deserialize(r.content.decode("utf-8")), Formation)
+
+    def get_boot_timeout(self):
+        try:
+            r = self._h._http_resource(
+                method="GET",
+                resource=("apps", self.id, "limits", "boot_timeout")
+            )
+        except HTTPError as e:
+            if e.response.status_code == http_codes.not_found:
+                return None
+            else:
+                raise
+
+        obj = r.json()
+        assert obj["name"] == "boot_timeout"
+        return obj["value"]
+
+    def set_boot_timeout(self, value: int):
+        r = self._h._http_resource(
+            method="PUT",
+            resource=("apps", self.id, "limits", "boot_timeout"),
+            data=json.dumps({"value": value})
+        )
+        return r.status_code
+
+    def del_boot_timeout(self):
+        r = self._h._http_resource(
+            method="DELETE",
+            resource=("apps", self.id, "limits", "boot_timeout")
+        )
+        return r.status_code
 
     @property
     def info(self):
