@@ -344,7 +344,7 @@ class App(BaseResource):
             if e.response.status_code == http_codes.not_found:
                 return None
             else:
-                raise
+                r.raise_for_status()
 
         obj = r.json()
         assert obj["name"] == "boot_timeout"
