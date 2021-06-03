@@ -4,6 +4,12 @@
 #
 version: 2.1
 executors:
+  py39:
+    docker:
+      - image: circleci/python:3.9
+  py38:
+    docker:
+      - image: circleci/python:3.8
   py37:
     docker:
       - image: circleci/python:3.7
@@ -105,6 +111,20 @@ jobs:
             - ~/repo
           key: v1-heroku3-wcpy-{{ .Revision }}
 
+  build39:
+    executor: py39
+    working_directory: ~/repo
+    steps:
+     - runtests:
+         interpreter: python3.9
+
+  build38:
+    executor: py38
+    working_directory: ~/repo
+    steps:
+     - runtests:
+         interpreter: python3.8
+
   build37:
     executor: py37
     working_directory: ~/repo
@@ -139,6 +159,12 @@ workflows:
   runtests:
     jobs:
       - build
+      - build39:
+         requires:
+           - build
+      - build38:
+         requires:
+           - build
       - build37:
          requires:
            - build
