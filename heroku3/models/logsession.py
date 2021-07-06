@@ -19,10 +19,10 @@ class LogSession(BaseResource):
     def __repr__(self):
         return "<logsession '{0}'>".format(self.id)
 
-    def stream(self, timeout=False):
+    def stream(self, timeout=None):
         r = requests.get(self.logplex_url, verify=False, stream=True, timeout=timeout)
         return r.iter_lines()
 
-    def get(self, timeout=False):
+    def get(self, timeout=None):
         r = requests.get(self.logplex_url, verify=False, stream=True, timeout=timeout)
         return r.content.decode("utf-8")
