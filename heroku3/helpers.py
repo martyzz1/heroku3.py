@@ -97,7 +97,7 @@ def to_python(
 
     return obj
 
-def validate_name(name:str) -> bool:
+def validate_name(name):
     """
     name should conform to the pattern ^[a-z][a-z0-9-]{1,28}[a-z0-9]$ as
     specified in the Heroku API.
