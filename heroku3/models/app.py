@@ -20,6 +20,8 @@ from .logsession import LogSession
 from ..rendezvous import Rendezvous
 from ..structures import DynoListResource
 from .collaborator import Collaborator
+from ..exceptions import InvalidNameException
+from ..helpers import validate_name
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote
@@ -399,7 +401,12 @@ class App(BaseResource):
 
         payload = {}
         if name:
-            payload["name"] = name
+            if validate_name(name):
+                payload["name"] = name
+            else:
+                raise InvalidNameException(
+                    "Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes."
+                    )
         else:
             if maintenance or maintenance == 0:
                 payload["maintenance"] = maintenance

@@ -8,6 +8,7 @@ This module contains the helpers.
 """
 
 import sys
+import re
 
 # Third party libraries
 from dateutil.parser import parse as parse_datetime
@@ -95,3 +96,13 @@ def to_python(
     # obj.__cache = in_dict
 
     return obj
+
+def validate_name(name):
+    """
+    name should conform to the pattern ^[a-z][a-z0-9-]{1,28}[a-z0-9]$ as
+    specified in the Heroku API.
+    Returns True if name conforms to Heorku API naming standards,
+        False otherwise.
+    """
+    name_regex = re.compile(r"^[a-z][a-z0-9-]{1,28}[a-z0-9]$")
+    return True if name_regex.search(name) is not None else False

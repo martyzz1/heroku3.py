@@ -17,7 +17,7 @@ from requests.exceptions import HTTPError
 
 # Project libraries
 from .models import Plan, RateLimit
-from .helpers import is_collection
+from .helpers import is_collection, validate_name
 from .models.app import App
 from .models.key import Key
 from .rendezvous import Rendezvous
@@ -31,6 +31,7 @@ from .models.app_setup import AppSetup
 from .models.configvars import ConfigVars
 from .models.logsession import LogSession
 from .models.account.feature import AccountFeature
+from .exceptions import InvalidNameException
 
 if sys.version_info > (3, 0):
     from urllib.parse import quote
@@ -354,7 +355,12 @@ class Heroku(HerokuCore):
             resource = ("apps",)
 
         if name:
-            payload["name"] = name
+            if validate_name(name):
+                payload["name"] = name
+            else:
+                raise InvalidNameException(
+                    "Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes."
+                    )
 
         if stack_id_or_name:
             payload["stack"] = stack_id_or_name
