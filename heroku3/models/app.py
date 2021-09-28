@@ -11,6 +11,7 @@ from .build import Build
 from .buildpack_installation import BuildpackInstallation
 from .domain import Domain
 from .region import Region
+from .sni_endpoint import SNIEndpoint
 from ..models import User, Stack, BaseResource, Organization
 from .release import Release
 from .logdrain import LogDrain
@@ -154,6 +155,40 @@ class App(BaseResource):
         r.raise_for_status()
         item = self._h._resource_deserialize(r.content.decode("utf-8"))
         return ConfigVars.new_from_dict(item, h=self._h, app=self)
+
+    def sni_endpoints(self, **kwargs):
+        """The SNI (SSL) endpoints for this app."""
+        return self._h._get_resources(resource=("apps", self.id, "sni-endpoints"), obj=SNIEndpoint, app=self)
+
+    def add_sni_endpoint(self, certificate_chain, private_key):
+        r = self._h._http_resource(
+            method="POST",
+            resource=("apps", self.id, "sni-endpoints"),
+            data=self._h._resource_serialize({
+                "certificate_chain": certificate_chain,
+                "private_key": private_key,
+            })
+        )
+
+        r.raise_for_status()
+        item = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return SNIEndpoint.new_from_dict(item, h=self._h, app=self)
+
+    def remove_sni_endpoint(self, sni_endpoint_id):
+        r = self._h._http_resource(
+            method="DELETE",
+            resource=("apps", self.id, "sni-endpoints", sni_endpoint_id)
+        )
+        r.raise_for_status()
+        return r.ok
+
+    def update_sni_endpoint(self, sni_endpoint_id):
+        r = self._h._http_resource(
+            method="PATCH",
+            resource=("apps", self.id, "sni-endpoints", sni_endpoint_id)
+        )
+        r.raise_for_status()
+        return r.ok
 
     def get_domain(self, hostname_or_id):
         """Get the domain for this app.."""
