@@ -367,11 +367,49 @@ Get a list of domains configured for this app::
 
 Add a domain to this app::
 
-    domain = app.add_domain('domain_hostname')
+    domain = app.add_domain('domain_hostname', 'sni_endpoint_id_or_name')
+    domain = app.add_domain('domain_hostname', None)  # domain will not be associated with an SNI endpoint
 
-Remove a domain from an app::
+Example of finding a matching SNI, given a domain::
+
+    domain = 'subdomain.domain.com'
+    sni_endpoint_id = None
+    for sni_endpoint in app.sni_endpoints():
+        for cert_domain in sni_endpoint.ssl_cert.cert_domains:
+            # check root or wildcard
+            if cert_domain in domain or cert_domain[1:] in domain:
+                sni_endpoint_id_or_name = sni_endpoint.id
+    domain = app.add_domain(domain, sni_endpoint_id)
+
+Remove a domain from this app::
 
     domain = app.remove_domain('domain_hostname')
+
+SNI Endpoints
+_______
+
+Get a list of SNI Endpoints for this app::
+
+    sni_endpoints = app.sni_endpoints()
+
+Add an SNI endpoint to this app::
+
+    sni_endpoint = app.add_sni_endpoint(
+        '-----BEGIN CERTIFICATE----- ...',
+        '-----BEGIN RSA PRIVATE KEY----- ...'
+    )
+
+Update an SNI endpoint for this app::
+
+    sni_endpoint = app.update_sni_endpoint(
+        'sni_endpoint_id_or_name',
+        '-----BEGIN CERTIFICATE----- ...',
+        '-----BEGIN RSA PRIVATE KEY----- ...'
+    )
+
+Delete an SNI endpoint for this app::
+
+    app.remove_sni_endpoint('sni_endpoint_id_or_name')
 
 Dynos & Process Formations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
