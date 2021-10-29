@@ -203,12 +203,15 @@ class App(BaseResource):
         """The domains for this app."""
         return self._h._get_resources(resource=("apps", self.name, "domains"), obj=Domain, app=self, **kwargs)
 
-    def add_domain(self, hostname):
+    def add_domain(self, hostname, sni_endpoint):
 
         r = self._h._http_resource(
             method="POST",
             resource=("apps", self.name, "domains"),
-            data=self._h._resource_serialize({"hostname": hostname}),
+            data=self._h._resource_serialize({
+                "hostname": hostname,
+                "sni_endpoint": sni_endpoint,
+            }),
         )
 
         r.raise_for_status()

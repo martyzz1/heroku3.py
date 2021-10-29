@@ -5,7 +5,7 @@ from . import BaseResource
 class SSLCert(BaseResource):
     """SSL Certificate."""
 
-    _strs = ["issuer", "id", "subject"]
+    _strs = ["cert_domains", "issuer", "id", "subject"]
     _dates = ["expires_at", "starts_at"]
     _pks = ["id"]
     _bools = ["ca_signed?", "self_signed?"]
