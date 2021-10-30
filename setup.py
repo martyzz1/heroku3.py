@@ -12,7 +12,8 @@ except ImportError:
 
 
 if sys.argv[-1] == "publish":
-    os.system("python setup.py sdist upload")
+    os.system("python setup.py sdist")
+    os.system("twine upload --skip-existing dist/*")
     sys.exit()
 
 required = [
