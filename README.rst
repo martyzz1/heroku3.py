@@ -386,7 +386,7 @@ Remove a domain from this app::
     domain = app.remove_domain('domain_hostname')
 
 SNI Endpoints
-_______
+~~~~~~~~~~~~~
 
 Get a list of SNI Endpoints for this app::
 
@@ -415,7 +415,7 @@ Dynos & Process Formations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Dynos
-_______
+_____
 
 Dynos represent all your running dyno processes. Use dynos to investigate whats running on your app.
 Use Dynos to create one off processes/run commands.
