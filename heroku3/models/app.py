@@ -183,13 +183,18 @@ class App(BaseResource):
         r.raise_for_status()
         return r.ok
 
-    def update_sni_endpoint(self, sni_endpoint_id):
+    def update_sni_endpoint(self, sni_endpoint_id, certificate_chain, private_key):
         r = self._h._http_resource(
             method="PATCH",
-            resource=("apps", self.id, "sni-endpoints", sni_endpoint_id)
+            resource=("apps", self.id, "sni-endpoints", sni_endpoint_id),
+            data=self._h._resource_serialize({
+                "certificate_chain": certificate_chain,
+                "private_key": private_key,
+            })
         )
         r.raise_for_status()
-        return r.ok
+        item = self._h._resource_deserialize(r.content.decode("utf-8"))
+        return SNIEndpoint.new_from_dict(item, h=self._h, app=self)
 
     def get_domain(self, hostname_or_id):
         """Get the domain for this app.."""
