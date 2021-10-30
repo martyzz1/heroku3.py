@@ -20,7 +20,7 @@ __author__ = "Heroku"
 __copyright__ = "Copyright 2013 Heroku"
 __license__ = "MIT"
 
-__version__ = "5.1.1"
+__version__ = "5.1.2"
 
 # Module namespace.
 
