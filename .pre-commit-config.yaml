@@ -4,15 +4,15 @@ default_stages: [ commit ]
 
 repos:
 -   repo: https://github.com/asottile/seed-isort-config
-    rev: v1.9.3
+    rev: v2.2.0
     hooks:
     - id: seed-isort-config
 -   repo: https://github.com/pre-commit/mirrors-isort
-    rev: v4.3.21
+    rev: v5.9.3
     hooks:
     - id: isort
 -   repo: https://github.com/ambv/black
-    rev: stable
+    rev: 21.9b0
     hooks:
     - id: black
 -   repo: https://github.com/pre-commit/pre-commit-hooks
@@ -28,14 +28,14 @@ repos:
     - id: check-toml
     - id: requirements-txt-fixer
 -   repo: https://github.com/getasnap/snap-pre-commit-hooks
-    rev: v1.10
+    rev: v2.10
     hooks:
     - id: prepend-branch-name
 -   repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: 1.11.2
+    rev: 2.1.5
     hooks:
     - id: markdownlint
 -   repo: https://github.com/Lucas-C/pre-commit-hooks-markup
-    rev: v1.0.0
+    rev: v1.0.1
     hooks:
     - id: rst-linter
