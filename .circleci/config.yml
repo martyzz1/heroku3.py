@@ -68,6 +68,7 @@ commands:
             else
                 << parameters.interpreter >> -m << parameters.venvmodule >> ~/venv
                 . ~/venv/bin/activate
+                pip install --upgrade pip
                 pip install ${PIP_EXTRA_OPTIONS} -r tests-requirements.txt
             fi
 
