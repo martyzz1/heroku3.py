@@ -134,21 +134,6 @@ jobs:
      - runtests:
          interpreter: python3.6
 
-  build35:
-    executor: py35
-    working_directory: ~/repo
-    steps:
-     - runtests:
-         interpreter: python3.5
-
-  build27:
-    executor: py27
-    working_directory: ~/repo
-    steps:
-     - runtests:
-         interpreter: python2.7
-         venvmodule: virtualenv
-
 workflows:
   version: 2
   runtests:
@@ -166,11 +151,4 @@ workflows:
       - build36:
          requires:
            - build
-      - build35:
-         requires:
-           - build
-      - build27:
-         requires:
-           - build
-
 # vim: et:sw=2:syntax=yaml:ts=2:
