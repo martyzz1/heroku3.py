@@ -16,12 +16,6 @@ executors:
   py36:
     docker:
       - image: circleci/python:3.6
-  py35:
-    docker:
-      - image: circleci/python:3.5
-  py27:
-    docker:
-      - image: circleci/python:2.7
   # CircleCI does not offer Python 2.6 images, and neither does
   # official Python repository. Not willing to spend time on it
   # either... Any volunteers ?
