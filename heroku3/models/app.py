@@ -80,18 +80,17 @@ class App(BaseResource):
         r.raise_for_status()
         return r.ok
 
-    def add_collaborator(self, user_id_or_email, silent=False, permissions=["view"]):
+    def add_collaborator(self, user_id_or_email, silent=False):
         """
         Adds a collaborator to your app
         [silent 1|0]  Specifies whether to email the collaborator or not
-        [permissions 'view'|'operate'|'deploy'|'manage']
         """
 
         if silent:
             silent = True
 
         # commented out until api is fixed
-        payload = {"silent": silent, "user": user_id_or_email, "permissions": permissions}
+        payload = {"silent": silent, "user": user_id_or_email}
 
         r = self._h._http_resource(
             method="POST", resource=("apps", self.name, "collaborators"), data=self._h._resource_serialize(payload)
