@@ -183,6 +183,35 @@ class Organization(BaseResource):
         return "<organization '{0}'>".format(self.name)
 
 
+class Team (BaseResource):
+    """Heroku Team."""
+
+    _strs = ["id", "name"]
+    _pks = ["id", "name"]
+
+    def __init__(self):
+        self.app = None
+        super(Team, self).__init__()
+
+    def __repr__(self):
+        return "<Team '{0}'>".format(self.name)
+
+
+class Space(BaseResource):
+    """Heroku Space."""
+
+    _strs = ["id", "name"]
+    _pks = ["id", "name"]
+    _bools = ["shield"]
+
+    def __init__(self):
+        self.app = None
+        super(Space, self).__init__()
+
+    def __repr__(self):
+        return "<Space '{0}'>".format(self.name)
+
+
 # class Plan(BaseResource):
 # """Heroku Addon."""
 #

@@ -343,16 +343,23 @@ class Heroku(HerokuCore):
     def app(self, id_or_name):
         return self._get_resource(("apps/{0:s}".format(id_or_name)), App)
 
-    def create_app(self, name=None, stack_id_or_name="cedar", region_id_or_name=None, organization=None):
+    def create_app(self, name=None, stack_id_or_name="cedar", region_id_or_name=None, organization=None, team=None, space=None):
         """Creates a new app."""
 
         payload = {}
+        resource = ("apps")
 
         if organization:
             payload["organization"] = organization
-            resource = ("organizations", "apps")
-        else:
-            resource = ("apps",)
+            resource.append("organizations")
+
+        if team:
+            payload["team"] = team
+            resource.append("teams")
+
+        if space:
+            payload["space"] = space
+            resource.append("spaces")
 
         if name:
             if validate_name(name):
@@ -360,7 +367,7 @@ class Heroku(HerokuCore):
             else:
                 raise InvalidNameException(
                     "Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes."
-                    )
+                )
 
         if stack_id_or_name:
             payload["stack"] = stack_id_or_name

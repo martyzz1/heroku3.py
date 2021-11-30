@@ -12,7 +12,7 @@ from .buildpack_installation import BuildpackInstallation
 from .domain import Domain
 from .region import Region
 from .sni_endpoint import SNIEndpoint
-from ..models import User, Stack, BaseResource, Organization
+from ..models import User, Stack, BaseResource, Organization, Team, Space
 from .release import Release
 from .logdrain import LogDrain
 from .formation import Formation
@@ -37,7 +37,8 @@ class App(BaseResource):
     _ints = ["slug_size", "repo_size"]
     _bools = ["maintenance"]
     _dates = ["archived_at", "created_at", "released_at", "updated_at"]
-    _map = {"region": Region, "owner": User, "stack": Stack, "organization": Organization}
+    _map = {"region": Region, "owner": User, "stack": Stack,
+            "organization": Organization, "team": Team, "space": Space}
     _pks = ["name", "id"]
 
     def __init__(self):
@@ -449,7 +450,7 @@ class App(BaseResource):
             else:
                 raise InvalidNameException(
                     "Name must start with a letter, end with a letter or digit and can only contain lowercase letters, digits, and dashes."
-                    )
+                )
         else:
             if maintenance or maintenance == 0:
                 payload["maintenance"] = maintenance
