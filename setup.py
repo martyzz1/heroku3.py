@@ -23,7 +23,7 @@ required = [
 
 
 def get_version(*file_paths):
-    """Retrieves the version from dj_snap_utils/__init__.py"""
+    """Retrieves the version from heroku3/__init__.py"""
     filename = os.path.join(os.path.dirname(__file__), *file_paths)
     version_file = open(filename).read()
     version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M)
