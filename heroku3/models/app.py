@@ -543,7 +543,7 @@ class App(BaseResource):
 
     def slug(self, slug_id):
         """Get a slug by id."""
-        return self._h._get_resources(resource=("apps", self.name, "slugs", slug_id), obj=Slug, app=self,)
+        return self._h._get_resource(resource=("apps", self.name, "slugs", slug_id), obj=Slug, app=self,)
 
 
 class AppTransfer(BaseResource):
