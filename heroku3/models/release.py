@@ -6,6 +6,7 @@ from .slug import Slug
 class Release(BaseResource):
     _strs = ["description", "id", "user", "commit", "addons", "status"]
     _ints = ["version"]
+    _bools = ["current"]
     _dates = ["created_at", "updated_at"]
     _map = {"slug": Slug, "user": User}
     _pks = ["id", "version"]
