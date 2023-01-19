@@ -44,7 +44,7 @@ setup(
     author="Martin Moss",
     author_email="martin_moss@btinternet.com",
     url="https://github.com/martyzz1/heroku3.py",
-    download_url="https://github.com/martyzz1/heroku3.py/tarball/v5.1.5",
+    download_url="https://github.com/martyzz1/heroku3.py/tarball/v5.2.0",
     packages=["heroku3"],
     package_data={
         "": [
