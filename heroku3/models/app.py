@@ -35,7 +35,7 @@ class App(BaseResource):
 
     _strs = ["buildpack_provided_description", "git_url", "id", "name", "web_url"]
     _ints = ["slug_size", "repo_size"]
-    _bools = ["maintenance"]
+    _bools = ["maintenance", "acm"]
     _dates = ["archived_at", "created_at", "released_at", "updated_at"]
     _map = {"region": Region, "owner": User, "stack": Stack,
             "organization": Organization, "team": Team, "space": Space}
@@ -160,6 +160,33 @@ class App(BaseResource):
     def sni_endpoints(self, **kwargs):
         """The SNI (SSL) endpoints for this app."""
         return self._h._get_resources(resource=("apps", self.id, "sni-endpoints"), obj=SNIEndpoint, app=self)
+
+    def enable_acm(self):
+        r = self._h._http_resource(
+            method="POST",
+            resource=("apps", self.id, "acm")
+        )
+
+        r.raise_for_status()
+        return r.ok
+
+    def disable_acm(self):
+        r = self._h._http_resource(
+            method="DELETE",
+            resource=("apps", self.id, "acm")
+        )
+
+        r.raise_for_status()
+        return r.ok
+
+    def refresh_acm(self):
+        r = self._h._http_resource(
+            method="PATCH",
+            resource=("apps", self.id, "acm")
+        )
+
+        r.raise_for_status()
+        return r.ok
 
     def add_sni_endpoint(self, certificate_chain, private_key):
         r = self._h._http_resource(
