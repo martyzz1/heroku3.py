@@ -5,7 +5,7 @@ from . import Plan, BaseResource
 class Addon(BaseResource):
     """Heroku Addon."""
 
-    _strs = ["id", "config", "name", "provider_id", "web_url"]
+    _strs = ["id", "config_vars", "name", "provider_id", "web_url"]
     _pks = ["id", "name"]
     _map = {"plan": Plan}
     _dates = ["created_at", "updated_at"]
