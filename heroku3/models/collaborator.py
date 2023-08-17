@@ -7,7 +7,7 @@ class Collaborator(BaseResource):
 
     _bools = ["silent"]
     _dates = ["created_at", "updated_at"]
-    _strs = ["id"]
+    _strs = ["id", "role"]
     _pks = ["id"]
     _map = {"user": User}
 
