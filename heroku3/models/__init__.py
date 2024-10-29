@@ -8,7 +8,6 @@ This module contains the models that comprise the Heroku API.
 """
 
 import sys
-from pprint import pprint  # noqa
 
 # Project libraries
 from ..helpers import to_python
