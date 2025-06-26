@@ -341,7 +341,7 @@ class Heroku(HerokuCore):
         """Creates a new app."""
 
         payload = {}
-        resource = ("apps")
+        resource = ["apps"]
 
         if organization:
             payload["organization"] = organization
