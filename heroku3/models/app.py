@@ -1,5 +1,4 @@
 import sys
-from pprint import pprint  # NOQA
 
 # Third party libraries
 from heroku3.models.slug import Slug

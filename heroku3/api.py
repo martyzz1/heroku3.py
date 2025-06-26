@@ -9,7 +9,6 @@ This module provides the basic API interface for Heroku.
 
 import sys
 import json
-from pprint import pprint  # noqa
 
 # Third party libraries
 import requests
@@ -150,7 +149,6 @@ class HerokuCore(object):
                     range_str += "{0}max={1}".format(seperator, limit)
 
                 range_str += ";"
-                # print(range_str)
                 if valrange:
                     # If given, This should override limit and order_by
                     range_str = valrange
@@ -190,9 +188,6 @@ class HerokuCore(object):
 
         if "Request-Id" in r.headers:
             self._last_request_id = r.headers["Request-Id"]
-
-        # if 'Accept-Ranges' in r.headers:
-        #     print("Accept-Ranges = {0}".format(r.headers['Accept-Ranges']))
 
         if r.status_code == 422:
             http_error = HTTPError(
@@ -319,7 +314,6 @@ class Heroku(HerokuCore):
         r = self._http_resource(method="POST", resource=("app-setups",), data=self._resource_serialize(payload))
         r.raise_for_status()
         item = self._resource_deserialize(r.content.decode("utf-8"))
-        pprint(item)
         return AppSetup.new_from_dict(item, h=self)
 
     def get_appsetup(self, app_setup_id):
