@@ -5,3 +5,4 @@ python-dateutil>=2.6.0
 requests>=2.11.1
 rstvalidator>=2020.12.3
 twine>=3.4.2
+urllib3>=2.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
