@@ -7,7 +7,5 @@ pytest-cov
 # pytest-pep8<1.0.6  # Does not install properly on CircleCI's docker images for Python <=3.4 (!) Not used yet, anyway.
 responses<0.6
 
-certifi>=2024.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
-idna>=3.7 # not directly required, pinned by Snyk to avoid a vulnerability
 requests>=2.32.4 # not directly required, pinned by Snyk to avoid a vulnerability
 
