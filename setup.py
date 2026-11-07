@@ -19,6 +19,7 @@ if sys.argv[-1] == "publish":
 required = [
     "requests>=1.2.3",
     "python-dateutil>=2.6.0",
+    "six>=1.5",
 ]
 
 
